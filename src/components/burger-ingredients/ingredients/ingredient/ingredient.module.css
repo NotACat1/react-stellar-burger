@@ -1,0 +1,33 @@
+.ingredient {
+	position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in;
+}
+
+.images {
+	flex-grow: 0;
+	flex-shrink: 0;
+}
+
+.ingredient:hover {
+  opacity: 0.75;
+}
+
+.price {
+	flex-grow: 0;
+	flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+	gap: 8px;
+}
+
+.description {
+	flex-grow: 1;
+	flex-shrink: 0;
+}
