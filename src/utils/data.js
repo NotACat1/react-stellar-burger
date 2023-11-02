@@ -210,3 +210,25 @@ export const data = [
      "__v":0
   }
 ]
+
+export const COMPONENT_TABS = [
+	{
+		type: 'bun',
+		text: 'Булки'
+	},
+	{
+		type: 'sauce',
+		text: 'Соусы'
+	},
+	{
+		type: 'main',
+		text: 'Начинки'
+	}
+];
+
+export const EMPTY_BUN = {
+  type: COMPONENT_TABS[0].type,
+  name: "Выберите булку",
+  price: data.find(item => item.type === "bun").price,
+  image: data.find(item => item.type === "bun").image
+};
