@@ -1,18 +1,18 @@
 .burger {
-	width: 100%;
-	display: flex;
-	align-items: center;
-	gap: 8px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .element {
-	width: 100%;
+  width: 100%;
 }
 
 .icon_visible {
-	visibility: visible;
+  visibility: visible;
 }
 
 .icon_hidden {
-	visibility: hidden;
+  visibility: hidden;
 }

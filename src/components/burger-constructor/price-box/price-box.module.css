@@ -1,14 +1,14 @@
 .container {
-	display: flex;
-	justify-content: end;
-	align-items: center;
-	gap: 40px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 40px;
 }
 
 .price {
-	display: flex;
-	align-items: center;
-	gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .price svg {

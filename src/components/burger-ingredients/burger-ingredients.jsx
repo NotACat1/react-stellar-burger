@@ -5,13 +5,12 @@ import Tabs from './tabs/tabs';
 import Ingredients from './ingredients/ingredients';
 
 function BurgerIngredients() {
-	
   return (
     <section className={styles.ingredients}>
-			<h2 className="text text_type_main-large mb-5">Соберите бургер</h2>
-			<Tabs />
-			<Ingredients />
-		</section>
+      <h2 className="text text_type_main-large mb-5">Соберите бургер</h2>
+      <Tabs />
+      <Ingredients />
+    </section>
   );
 }
 

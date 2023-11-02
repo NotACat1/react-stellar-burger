@@ -1,5 +1,5 @@
 .ingredient {
-	position: relative;
+  position: relative;
   display: flex;
   flex-direction: column;
   row-gap: 4px;
@@ -10,8 +10,8 @@
 }
 
 .images {
-	flex-grow: 0;
-	flex-shrink: 0;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 .ingredient:hover {
@@ -19,15 +19,15 @@
 }
 
 .price {
-	flex-grow: 0;
-	flex-shrink: 0;
+  flex-grow: 0;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-	gap: 8px;
+  gap: 8px;
 }
 
 .description {
-	flex-grow: 1;
-	flex-shrink: 0;
+  flex-grow: 1;
+  flex-shrink: 0;
 }

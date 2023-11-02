@@ -1,23 +1,18 @@
 import React from 'react';
+import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './price-box.module.css';
 
-import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-
-function PriceBox() {	
+function PriceBox() {
   return (
     <div className={`${styles.container} mt-5 pr-4`}>
-			<div className={styles.price}>
+      <div className={styles.price}>
         <p className="text text_type_digits-medium">100</p>
         <CurrencyIcon type="primary" />
       </div>
-			<Button
-        type="primary"
-        size="large"
-        htmlType="button"
-      >
+      <Button type="primary" size="large" htmlType="button">
         Оформить заказ
       </Button>
-		</div>
+    </div>
   );
 }
 

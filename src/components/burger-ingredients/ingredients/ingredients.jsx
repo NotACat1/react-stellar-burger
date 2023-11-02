@@ -8,12 +8,12 @@ import IngredientsRow from './ingredient-row/ingredient-row';
 function Ingredients() {
   return (
     <ul className={`${styles.container} mt-10 pr-2 pl-4`}>
-			{COMPONENT_TABS.map((tabItem) => (
-				<IngredientsRow key={tabItem.type} title={tabItem.text}>
-        	{ingredientData.filter(ingredient => ingredient.type === tabItem.type)}
-      	</IngredientsRow>
-			))}
-		</ul>
+      {COMPONENT_TABS.map((tabItem) => (
+        <IngredientsRow key={tabItem.type} title={tabItem.text}>
+          {ingredientData.filter((ingredient) => ingredient.type === tabItem.type)}
+        </IngredientsRow>
+      ))}
+    </ul>
   );
 }
 
