@@ -1,0 +1,21 @@
+.modal {
+  z-index: 9999;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 40px;
+  border: 1px solid rgb(76 76 255 / 20%);
+  background: #1c1c21;
+  box-shadow:
+    0 0 1px 0 rgb(0 0 0 / 4%),
+    0 4px 8px 0 rgb(0 0 0 / 4%),
+    0 16px 24px 0 rgb(0 0 0 / 4%),
+    0 24px 32px 0 rgb(0 0 0 / 4%);
+}
+
+.btn {
+  position: fixed;
+  top: 60px;
+  right: 40px;
+}
