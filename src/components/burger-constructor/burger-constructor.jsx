@@ -1,16 +1,21 @@
 import React from 'react';
 import styles from './burger-constructor.module.css';
+import PropTypes from 'prop-types';
+
+import { TEST_LIST } from '../../utils/data.js';
 
 import PriceBox from './price-box/price-box';
-import BurgerList from './price-list/price-list';
+import PriceList from './price-list/price-list';
 
-function BurgerConstructor() {
+export default function BurgerConstructor({ onOrderClick }) {
   return (
     <section className={`${styles.constructor} pt-10`}>
-      <BurgerList />
-      <PriceBox />
+      <PriceList data={TEST_LIST} />
+      <PriceBox onOrderClick={onOrderClick} />
     </section>
   );
 }
 
-export default BurgerConstructor;
+PriceBox.propTypes = {
+  onOrderClick: PropTypes.func.isRequired,
+};

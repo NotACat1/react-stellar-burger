@@ -1,0 +1,16 @@
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.title {
+  margin-right: auto;
+}
+
+.btn {
+  justify-self: end;
+  height: 64px;
+  cursor: pointer;
+}

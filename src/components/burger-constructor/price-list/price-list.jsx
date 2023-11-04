@@ -2,19 +2,25 @@ import React from 'react';
 import styles from './price-list.module.css';
 import { EMPTY_BUN } from '../../../utils/data.js';
 
-import BurgerItem from '../price-item/price-item';
+import PriceItem from '../price-item/price-item';
+import PropTypes from 'prop-types';
 
-function BurgerList(selectedItems) {
+export default function PriceList({ data }) {
   return (
     <ul className={`${styles.list} pt-5 pb-5 pl-4 mb-5`}>
-      <BurgerItem position="top" iconVis={false} item={EMPTY_BUN} />
+      <PriceItem position="top" iconVis={false} item={EMPTY_BUN} />
       <ul className={`${styles.seclist} pr-2`}>
-        {selectedItems.length > 0 &&
-          selectedItems.map((item) => <BurgerItem iconVis={true} item={item} key={item._id} />)}
+        {data && data.map((item) => <PriceItem iconVis={true} item={item} key={item._id} />)}
       </ul>
-      <BurgerItem position="bottom" iconVis={false} item={EMPTY_BUN} />
+      <PriceItem position="bottom" iconVis={false} item={EMPTY_BUN} />
     </ul>
   );
 }
 
-export default BurgerList;
+PriceList.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+    }),
+  ),
+};

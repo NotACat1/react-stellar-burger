@@ -1,20 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styles from './ingredients.module.css';
 
-import { data as ingredientData, COMPONENT_TABS } from '../../../utils/data.js';
+import { COMPONENT_TABS } from '../../../utils/data.js';
 
 import IngredientsRow from './ingredient-row/ingredient-row';
 
-function Ingredients() {
+export default function Ingredients({ data, onCardClick }) {
   return (
     <ul className={`${styles.container} mt-10 pr-2 pl-4`}>
       {COMPONENT_TABS.map((tabItem) => (
-        <IngredientsRow key={tabItem.type} title={tabItem.text}>
-          {ingredientData.filter((ingredient) => ingredient.type === tabItem.type)}
-        </IngredientsRow>
+        <IngredientsRow
+          onCardClick={onCardClick}
+          key={tabItem.type}
+          title={tabItem.text}
+          data={data ? data.filter((ingredient) => ingredient.type === tabItem.type) : []}
+        />
       ))}
     </ul>
   );
 }
 
-export default Ingredients;
+Ingredients.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string.isRequired,
+    }),
+  ),
+  onCardClick: PropTypes.func.isRequired,
+};
