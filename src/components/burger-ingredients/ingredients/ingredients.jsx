@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './ingredients.module.css';
 
 import { COMPONENT_TABS } from '../../../utils/data.js';
+import { ingredientPropType } from '../../../utils/prop-types.js';
 
 import IngredientsRow from './ingredient-row/ingredient-row';
 
@@ -22,10 +23,6 @@ export default function Ingredients({ data, onCardClick }) {
 }
 
 Ingredients.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string.isRequired,
-    }),
-  ),
+  data: PropTypes.arrayOf(ingredientPropType),
   onCardClick: PropTypes.func.isRequired,
 };
