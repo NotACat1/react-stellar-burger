@@ -8,10 +8,10 @@ import ModalOverlay from './modal-overlay/modal-overlay';
 
 const modalRoot = document.getElementById('portal-root');
 
-export default function Modal({ children, title, onClose, isOpen }) {
+export default function Modal({ children, title, onClose }) {
   useEffect(() => {
     const handleEsc = (event) => {
-      if (event.keyCode === 27) {
+      if (event.keyCode === 'Escape') {
         onClose();
       }
     };
@@ -22,15 +22,13 @@ export default function Modal({ children, title, onClose, isOpen }) {
   }, [onClose]);
 
   return ReactDOM.createPortal(
-    isOpen && (
-      <>
-        <div className={`${styles.modal} p-10`}>
-          <ModalHeader close={onClose} title={title} />
-          {children}
-        </div>
-        <ModalOverlay onClose={onClose} />
-      </>
-    ),
+    <>
+      <div className={`${styles.modal} p-10`}>
+        <ModalHeader close={onClose} title={title} />
+        {children}
+      </div>
+      <ModalOverlay onClose={onClose} />
+    </>,
     modalRoot,
   );
 }
@@ -38,5 +36,4 @@ export default function Modal({ children, title, onClose, isOpen }) {
 Modal.propTypes = {
   title: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired,
 };
