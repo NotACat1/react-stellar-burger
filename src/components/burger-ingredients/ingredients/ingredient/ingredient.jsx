@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient.module.css';
+import { ingredientPropType } from '../../../../utils/prop-types.js';
 
 export default function Ingredient({ data, onCardClick }) {
   const handleClick = () => {
@@ -27,19 +28,7 @@ export default function Ingredient({ data, onCardClick }) {
   );
 }
 
-function isImageUrl(url) {
-  return /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/.test(url);
-}
-
 Ingredient.propTypes = {
-  data: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    image: (props, propName, componentName) => {
-      if (!isImageUrl(props[propName])) {
-        return new Error(`Invalid prop ${propName} supplied to ${componentName}. Expecting a valid image URL.`);
-      }
-    },
-  }).isRequired,
+  data: ingredientPropType.isRequired,
   onCardClick: PropTypes.func.isRequired,
 };

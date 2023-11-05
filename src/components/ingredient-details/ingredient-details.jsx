@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import EnergyItem from './energy-item/energy-item';
 import styles from './ingredient-details.module.css';
+import { ingredientPropType } from '../../utils/prop-types.js';
 
 export default function IngredientDetails({ data }) {
   return (
@@ -18,21 +19,6 @@ export default function IngredientDetails({ data }) {
   );
 }
 
-function isImageUrl(url) {
-  return /^https?:\/\/.*\.(jpeg|jpg|gif|png)$/.test(url);
-}
-
 IngredientDetails.propTypes = {
-  data: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    image: (props, propName, componentName) => {
-      if (!isImageUrl(props[propName])) {
-        return new Error(`Invalid prop ${propName} supplied to ${componentName}. Expecting a valid image URL.`);
-      }
-    },
-    calories: PropTypes.number.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-  }),
+  data: ingredientPropType
 };

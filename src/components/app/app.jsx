@@ -38,12 +38,16 @@ export default function App() {
         <BurgerIngredients onCardClick={handleIngredientClick} />
         <BurgerConstructor onOrderClick={handleOrderClick} />
       </main>
-      <Modal title="Детали ингредиента" isOpen={modalIngredientState.open} onClose={closeModal}>
-        <IngredientDetails data={modalIngredientState.data} />
-      </Modal>
-      <Modal isOpen={modalOrderState.open} onClose={closeModal}>
-        <OrderDetails />
-      </Modal>
+      {modalIngredientState.open && (
+        <Modal title="Детали ингредиента" isOpen={modalIngredientState.open} onClose={closeModal}>
+          <IngredientDetails data={modalIngredientState.data} />
+        </Modal>
+      )}
+      {modalOrderState.open && (
+        <Modal isOpen={modalOrderState.open} onClose={closeModal}>
+          <OrderDetails />
+        </Modal>
+      )}
     </div>
   );
 }
