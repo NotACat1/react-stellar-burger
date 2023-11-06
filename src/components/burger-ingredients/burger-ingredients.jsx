@@ -17,6 +17,9 @@ export default function BurgerIngredients({ onCardClick }) {
       setState({ ...state, loading: true });
       try {
         const response = await fetch('https://norma.nomoreparties.space/api/ingredients');
+        if (!response.ok) {
+          throw new Error(`Ошибка HTTP: ${response.status}`);
+        }
         const rez = await response.json();
         setState({ dataIngredients: rez.data, loading: false, error: !rez.success });
       } catch (error) {
