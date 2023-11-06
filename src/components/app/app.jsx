@@ -39,12 +39,12 @@ export default function App() {
         <BurgerConstructor onOrderClick={handleOrderClick} />
       </main>
       {modalIngredientState.open && (
-        <Modal title="Детали ингредиента" isOpen={modalIngredientState.open} onClose={closeModal}>
+        <Modal title="Детали ингредиента" onClose={closeModal}>
           <IngredientDetails data={modalIngredientState.data} />
         </Modal>
       )}
       {modalOrderState.open && (
-        <Modal isOpen={modalOrderState.open} onClose={closeModal}>
+        <Modal onClose={closeModal}>
           <OrderDetails />
         </Modal>
       )}
