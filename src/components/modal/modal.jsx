@@ -11,7 +11,7 @@ const modalRoot = document.getElementById('portal-root');
 export default function Modal({ children, title, onClose }) {
   useEffect(() => {
     const handleEsc = (event) => {
-      if (event.keyCode === 'Escape') {
+      if (event.key === 'Escape') {
         onClose();
       }
     };
