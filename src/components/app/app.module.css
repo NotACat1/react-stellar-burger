@@ -1,7 +1,15 @@
 .app {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  background-color: #131316;
-  color: #f2f2f3;
+  padding-top: 128px;
+  padding-bottom: 40px;
+  background: #131316;
+}
+
+.main {
+  box-sizing: border-box;
+  max-width: 1280px;
+  min-width: 1128px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
 }
