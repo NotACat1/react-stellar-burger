@@ -22,7 +22,9 @@ export default function Burger() {
   // Использование useMemo для оптимизации рендера
   const renderedIngredients = useMemo(() => {
     if (burgerIngredients) {
-      return burgerIngredients.map((item, index) => <Ingredient iconVis={true} data={item} key={index} />);
+      return burgerIngredients.map((ingredient) => (
+        <Ingredient iconVis={true} data={ingredient} key={ingredient.key} />
+      ));
     }
     return null;
   }, [burgerIngredients]);
@@ -46,4 +48,3 @@ export default function Burger() {
     </ul>
   );
 }
-
