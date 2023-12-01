@@ -28,7 +28,7 @@ export default function BurgerIngredients() {
     error === null &&
     !loading && (
       <section className={styles.ingredients}>
-        <h2 className="text text_type_main-large mb-5">Соберите бургер</h2>
+        <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
         <Tabs />
         <Ingredients />
       </section>

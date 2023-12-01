@@ -40,7 +40,7 @@ export default function IngredientsRow({ tab }) {
 
   return (
     <li ref={rowRef} id={tab} className={styles.row}>
-      <h3 className={'mb-6 text text_type_main-medium'}>{COMPONENT_TABS[tab]}</h3>
+      <h2 className={'mb-6 text text_type_main-medium'}>{COMPONENT_TABS[tab]}</h2>
       <ul className={`${styles.list} mt-6`}>{ingredientComponents}</ul>
     </li>
   );
