@@ -30,7 +30,7 @@ export const removeBunBurger = () => ({
 });
 
 // Создает действие для обновления порядка ингредиентов
-export const updateIngredientOrder = (startIndex, endIndex) => ({
+export const updateIngredientOrder = (firstKey, secondKey) => ({
   type: UPDATE_INGREDIENT_ORDER,
-  payload: { startIndex, endIndex },
+  payload: { firstKey, secondKey },
 });
