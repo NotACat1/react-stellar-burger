@@ -11,10 +11,10 @@ import styles from './ingredient-details.module.css';
 
 // Основной компонент для информации об ингридиенте
 export default function IngredientDetails() {
-	// Получение данных об ингредиенте из Redux
+  // Получение данных об ингредиенте из Redux
   const { name, image, energy } = useSelector((state) => state.selectedIngredient.ingredient);
 
-	// Проверка существования данных ингредиента
+  // Проверка существования данных ингредиента
   const energyItems = useMemo(() => {
     return energy.map(({ name, value }, index) => <EnergyItem key={index} title={name} value={value} />);
   }, [energy]);

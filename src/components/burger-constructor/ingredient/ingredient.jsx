@@ -27,7 +27,7 @@ export default function Ingredient({ position, iconVis, data }) {
 
   // Функция для обработки удаления ингредиента
   const handleIngredientDelete = () => {
-    dispatch(removeIngredientBurger(data.index));
+    dispatch(removeIngredientBurger(data.key));
   };
 
   // Хук для перетаскивания
@@ -40,16 +40,15 @@ export default function Ingredient({ position, iconVis, data }) {
   });
 
   // Хук для обработки бросания
-  const [{ isHover }, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: 'item',
-    collect: (monitor) => ({
-      isHover: monitor.isOver(),
-    }),
-    drop: (item) => {
-      const { index: startIndex } = item;
-      const endIndex = data.index;
-      if (startIndex && endIndex && startIndex !== endIndex) dispatch(updateIngredientOrder(startIndex, endIndex));
-    },
+    hover: (item) => {
+      const { key: firstKey } = item;
+      const secondKey = data.key;
+      if (firstKey && secondKey && firstKey !== secondKey) {
+        dispatch(updateIngredientOrder(firstKey, secondKey));
+      }
+    }
   });
 
   // Создаем общий реф
@@ -61,7 +60,7 @@ export default function Ingredient({ position, iconVis, data }) {
   }
 
   return (
-    <li className={styles.burger} ref={sharedRef} style={{ opacity: isDrag || isHover ? 0.5 : 1 }}>
+    <li className={styles.burger} ref={sharedRef} style={{ opacity: isDrag ? 0.5 : 1 }}>
       <div className={visibility} ref={iconVis ? drag : null}>
         <DragIcon type="primary" />
       </div>

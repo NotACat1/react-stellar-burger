@@ -1,3 +1,6 @@
+// Функция для генерации уникального ключа
+import { generateKey } from '../../utils/generate-key';
+
 // Action Types
 import {
   ADD_BUN_BURGER,
@@ -9,7 +12,6 @@ import {
 
 // Начальное состояние для редьюсера конструктора бургера
 const initialState = {
-  counterIndex: 0,
   bun: {
     calories: 420,
     carbohydrates: 53,
@@ -40,16 +42,15 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
     }
     // Добавление ингредиента к состоянию
     case ADD_INGREDIENT_BURGER: {
-      const newIndex = state.counterIndex + 1;
+      const key = generateKey();
       return {
         ...state,
-        ingredients: [...state.ingredients, { ...payload, index: newIndex }],
-        counterIndex: newIndex,
+        ingredients: [...state.ingredients, { ...payload, key }],
       };
     }
     // Удаление ингредиента из состояния
     case REMOVE_INGREDIENT_BURGER: {
-      const ingredientIndex = state.ingredients.findIndex((ingredient) => ingredient.index === payload);
+      const ingredientIndex = state.ingredients.findIndex((ingredient) => ingredient.key === payload);
       if (ingredientIndex !== -1) {
         const updatedIngredients = [...state.ingredients];
         updatedIngredients.splice(ingredientIndex, 1);
@@ -62,17 +63,15 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
     }
     // Редюсер для обновления порядка ингредиентов
     case UPDATE_INGREDIENT_ORDER: {
-      // Получаем индексы начального и конечного элементов из payload
-      const { startIndex, endIndex } = payload;
+      const { firstKey, secondKey } = payload;
       // Создаем копию массива ингредиентов
       const updatedIngredients = [...state.ingredients];
       // Находим индексы элементов в массиве
-      const indexFirstElement = updatedIngredients.findIndex((ingredient) => ingredient.index === startIndex);
-      const indexSecondElement = updatedIngredients.findIndex((ingredient) => ingredient.index === endIndex);
+      const indexFirstElement = updatedIngredients.findIndex((ingredient) => ingredient.key === firstKey);
+      const indexSecondElement = updatedIngredients.findIndex((ingredient) => ingredient.key === secondKey);
       // Меняем местами объекты в массиве по найденным индексам
-      const temp = updatedIngredients[indexFirstElement];
-      updatedIngredients[indexFirstElement] = updatedIngredients[indexSecondElement];
-      updatedIngredients[indexSecondElement] = temp;
+      const [movedIngredient] = updatedIngredients.splice(indexFirstElement, 1);
+      updatedIngredients.splice(indexSecondElement, 0, movedIngredient);
       return {
         ...state,
         ingredients: updatedIngredients,
