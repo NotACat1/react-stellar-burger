@@ -1,7 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './energy-item.module.css';
 
+// Подключение стилей и данных
+import styles from './energy-item.module.css';
+import PropTypes from 'prop-types';
+
+// Компонент отображения числовых показатель ингридиента
 export default function EnergyItem({ title, value }) {
   return (
     <li className={styles.item}>
