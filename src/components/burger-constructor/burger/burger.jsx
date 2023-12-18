@@ -1,23 +1,50 @@
-import React from 'react';
-import styles from './burger.module.css';
-import { EMPTY_BUN } from '../../../utils/data.js';
-import { ingredientPropType } from '../../../utils/prop-types.js';
+import React, { useMemo } from 'react';
 
+// Подключение компонентов
 import Ingredient from '../ingredient/ingredient';
-import PropTypes from 'prop-types';
 
-export default function Burger({ data }) {
+// Подключение Redux
+import { useSelector, useDispatch } from 'react-redux';
+import { addBunBurger, addIngredientBurger } from '../../../services/actions/burger-constructor';
+
+// Подключение Drag and Drop
+import { useDrop } from 'react-dnd';
+
+// Подключение стилей и данных
+import styles from './burger.module.css';
+
+// Компонент для игридиентов бургера
+export default function Burger() {
+  // Получение диспетчера Redux и данных о булочке и ингредиентах из Redux-стейта
+  const dispatch = useDispatch();
+  const { bun: burgerBun, ingredients: burgerIngredients } = useSelector((state) => state.burgerIngredients);
+
+  // Использование useMemo для оптимизации рендера
+  const renderedIngredients = useMemo(() => {
+    if (burgerIngredients) {
+      return burgerIngredients.map((ingredient) => (
+        <Ingredient iconVis={true} data={ingredient} key={ingredient.key} />
+      ));
+    }
+    return null;
+  }, [burgerIngredients]);
+
+  // Использование useDrop для обработки бросания ингредиентов
+  const [{ isHover }, drop] = useDrop({
+    accept: 'ingredient',
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(item) {
+      item && item.type === 'bun' ? dispatch(addBunBurger(item)) : dispatch(addIngredientBurger(item));
+    },
+  });
+
   return (
-    <ul className={`${styles.list} pt-5 pb-5 pl-4 mb-5`}>
-      <Ingredient position="top" iconVis={false} data={EMPTY_BUN} />
-      <ul className={`${styles.seclist} pr-2`}>
-        {data && data.map((item) => <Ingredient iconVis={true} data={item} key={item._id} />)}
-      </ul>
-      <Ingredient position="bottom" iconVis={false} data={EMPTY_BUN} />
+    <ul ref={drop} style={{ opacity: isHover ? 0.5 : 1 }} className={`${styles.list} pt-5 pb-5 pl-4 mb-5`}>
+      <Ingredient position="top" iconVis={false} data={burgerBun} />
+      <ul className={`${styles.seclist} pr-2`}>{renderedIngredients}</ul>
+      <Ingredient position="bottom" iconVis={false} data={burgerBun} />
     </ul>
   );
 }
-
-Burger.propTypes = {
-  data: PropTypes.arrayOf(ingredientPropType),
-};

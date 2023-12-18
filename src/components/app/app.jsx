@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import styles from './app.module.css';
 
+// Подключение компонентов
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
@@ -8,66 +8,46 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
 
+// Подключение Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { closeSelectedIngredient } from '../../services/actions/ingredient-details';
+import { closeOrderModal } from '../../services/actions/order-details';
+
+// Подключение стилей
+import styles from './app.module.css';
+
+// Основной компонент приложения
 export default function App() {
-  const [modalIngredientState, setModalIngredientState] = useState({
-    open: false,
-    data: null,
-  });
+  // Получение диспетчера Redux и состояние открыия модального окна инридиентов
+  const dispatch = useDispatch();
+  // Получение состояния открытия модального окна выбранного ингредиента
+  const openModalIngredient = useSelector((state) => state.selectedIngredient.open);
+  // Деструктуризация состояния созданного заказа для модального окна заказа
+  const {
+    loading: loadingModalOrder, // Флаг загрузки данных заказа
+    error: errorModalOrder, // Ошибка, если есть
+    open: openModalOrder, // Флаг открытого состояния модального окна заказа
+  } = useSelector((state) => state.createdOrder);
 
-  const [modalOrderState, setModalOrderState] = useState({
-    open: false,
-  });
-
-  const [dataIngredientsState, setDataIngredientsState] = useState({
-    ingredients: null,
-    loading: false,
-    error: false,
-  });
-
-  const handleIngredientClick = (data) => {
-    setModalIngredientState({ open: true, data: data });
-  };
-
-  const handleOrderClick = () => {
-    setModalOrderState({ open: true });
-  };
-
+  // Функция для закрытия модального окна
   const closeModal = () => {
-    setModalIngredientState({ ...modalIngredientState, open: false });
-    setModalOrderState({ ...modalOrderState, open: false });
+    if (openModalIngredient) dispatch(closeSelectedIngredient());
+    if (errorModalOrder === null && !loadingModalOrder && openModalOrder) dispatch(closeOrderModal());
   };
-
-  useEffect(() => {
-    const fetchDataIngredient = async () => {
-      setDataIngredientsState({ ...dataIngredientsState, loading: true });
-      try {
-        const response = await fetch('https://norma.nomoreparties.space/api/ingredients');
-        if (!response.ok) {
-          throw new Error(`Ошибка HTTP: ${response.status}`);
-        }
-        const rez = await response.json();
-        setDataIngredientsState({ ingredients: rez.data, loading: false, error: !rez.success });
-      } catch (error) {
-        console.error('ERROR:', error);
-        setDataIngredientsState({ ingredients: null, loading: false, error: true });
-      }
-    };
-    fetchDataIngredient();
-  }, []);
 
   return (
     <div className={styles.app}>
       <AppHeader />
       <main className={`${styles.main} pr-5 pl-5`}>
-        {!dataIngredientsState.error && !dataIngredientsState.loading && <BurgerIngredients onCardClick={handleIngredientClick} data={dataIngredientsState.ingredients} />}
-        <BurgerConstructor onOrderClick={handleOrderClick} />
+        <BurgerIngredients />
+        <BurgerConstructor />
       </main>
-      {modalIngredientState.open && (
+      {openModalIngredient && (
         <Modal title="Детали ингредиента" onClose={closeModal}>
-          <IngredientDetails data={modalIngredientState.data} />
+          <IngredientDetails />
         </Modal>
       )}
-      {modalOrderState.open && (
+      {errorModalOrder === null && !loadingModalOrder && openModalOrder && (
         <Modal onClose={closeModal}>
           <OrderDetails />
         </Modal>

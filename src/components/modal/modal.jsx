@@ -1,14 +1,19 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import styles from './modal.module.css';
 
+// Подключение компонентов
 import ModalHeader from './modal-header/modal-header';
 import ModalOverlay from './modal-overlay/modal-overlay';
 
+// Подключение стилей и данных
+import styles from './modal.module.css';
+import PropTypes from 'prop-types';
+
 const modalRoot = document.getElementById('portal-root');
 
+// Компонент модального окна
 export default function Modal({ children, title, onClose }) {
+  // Обработка события нажатия на клавишу "Escape" для закрытия модального окна
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === 'Escape') {
@@ -34,6 +39,7 @@ export default function Modal({ children, title, onClose }) {
 }
 
 Modal.propTypes = {
+  children: PropTypes.node.isRequired,
   title: PropTypes.string,
   onClose: PropTypes.func.isRequired,
 };

@@ -1,7 +1,12 @@
 import React from 'react';
+
+// Подключение компонентов
 import { Logo, CurrencyIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
+// Подключение стилей
 import styles from './app-header.module.css';
 
+// Комопнент шапки приложения
 export default function AppHeader() {
   return (
     <header className={`${styles.header} pt-4 pb-4`}>
