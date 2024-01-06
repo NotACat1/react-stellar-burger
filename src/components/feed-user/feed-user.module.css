@@ -1,12 +1,9 @@
-/* Стили для элемента с классом "constructor" */
-.constructor {
+.container {
+  /* Установка позиции элемента как относительной, что позволяет использовать позиционирование потомков относительно данного элемента */
+  position: relative;
+
   /* Установка модели размера "border-box", чтобы ширина и высота включали границы и отступы */
   box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: calc(var(--offset-base-size) * 10);
 
   /* Установка ширины элемента в 100% ширины его родителя */
   width: 100%;

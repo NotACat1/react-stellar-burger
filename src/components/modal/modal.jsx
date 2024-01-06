@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 // Подключение компонентов
-import ModalHeader from './modal-header/modal-header';
-import ModalOverlay from './modal-overlay/modal-overlay';
+import ModalHeader from '../modal-header/modal-header';
+import ModalOverlay from '../modal-overlay/modal-overlay';
 
 // Подключение стилей и данных
 import styles from './modal.module.css';
