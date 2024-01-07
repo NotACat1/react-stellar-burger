@@ -68,10 +68,12 @@ export const userReducer = (state = initialState, { type, payload }) => {
       };
     }
     case REGISTRATION_SUCCESS: {
+      const { user, accessToken } = payload;
       return {
         ...state,
         isRequestingRegistration: false,
-        accessToken: payload,
+        accessToken: accessToken,
+        information: user,
       };
     }
     case REGISTRATION_FAILED: {
@@ -158,7 +160,7 @@ export const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isRequestingGetUserData: false,
-        info: payload,
+        information: payload,
       };
     }
     case GET_USER_DATA_FAILED: {

@@ -42,7 +42,7 @@ export const registration = ({ email, name, password }) =>
       // Вызов API для регистрации
       const registrationData = await apiService.register({ email, name, password });
       // Успешная регистрация - диспатч соответствующего действия
-      dispatch(registrationSuccess(registrationData.accessToken));
+      dispatch(registrationSuccess(registrationData));
       // Установка refreshToken в cookie
       cookieManager.setCookie(REFRESH_TOKEN_COOKIE_NAME, registrationData.refreshToken);
     } catch (error) {

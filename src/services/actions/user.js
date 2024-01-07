@@ -53,7 +53,7 @@ export const refreshTokenFailed = (error = 'Unknown error') => ({ type: REFRESH_
 
 // Действия связанные с процессом регистрации
 export const startRegistration = () => ({ type: START_REGISTRATION });
-export const registrationSuccess = (token) => ({ type: REGISTRATION_SUCCESS, payload: token });
+export const registrationSuccess = (userData) => ({ type: REGISTRATION_SUCCESS, payload: userData });
 export const registrationFailed = (error = 'Unknown error') => ({ type: REGISTRATION_FAILED, payload: error });
 
 // Действия связанные с процессом сброса пароля
