@@ -9,6 +9,7 @@ export default function ModalOverlay({ onClose }) {
   return <div className={styles.overlay} onClick={onClose}></div>;
 }
 
+// Определение PropTypes для компонента
 ModalOverlay.propTypes = {
   onClose: PropTypes.func.isRequired,
 };

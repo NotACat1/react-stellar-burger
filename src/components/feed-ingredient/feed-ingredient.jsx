@@ -1,13 +1,15 @@
 import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
 
+// Подключение компонентов
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import FeedIcon from '../feed-icon/feed-icon';
 
-// Подключение стилей и данных
-import styles from './feed-ingredient.module.css';
-
 // Подключение Redux
 import { useSelector } from 'react-redux';
+
+// Подключение стилей и данных
+import styles from './feed-ingredient.module.css';
 
 // Компонент FeedIngredient принимает id и count в качестве свойств
 export default function FeedIngredient({ id, count }) {
@@ -31,3 +33,9 @@ export default function FeedIngredient({ id, count }) {
     </li>
   );
 }
+
+// Определение PropTypes для компонента
+FeedIngredient.propTypes = {
+  id: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
+};

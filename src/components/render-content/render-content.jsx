@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Подключение компонентов
 import Loader from '../loader/loader';
@@ -23,3 +24,15 @@ export default function RenderContent({ isLoading, hasError, error, children }) 
   // Возврат дочерних компонентов в случае успешной загрузки данных без ошибок
   return children;
 }
+
+// Определение PropTypes для компонента
+RenderContent.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  hasError: PropTypes.bool.isRequired,
+  error: PropTypes.shape({
+    title: PropTypes.string,
+    text: PropTypes.string,
+    image: PropTypes.string,
+  }),
+  children: PropTypes.node,
+};

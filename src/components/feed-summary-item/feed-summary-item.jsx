@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Подключение стилей и данных
 import styles from './feed-summary-item.module.css';
@@ -12,3 +13,9 @@ export default function FeedSummaryItem({ title, value }) {
     </div>
   );
 }
+
+// Определение PropTypes для компонента
+FeedSummaryItem.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
+};

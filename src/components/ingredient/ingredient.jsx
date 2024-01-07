@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // Подключение компонентов
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -20,7 +21,7 @@ import leftClickIcon from '../../assets/images/left-сlick-icon.png';
 import rightClickIcon from '../../assets/images/right-сlick-icon.png';
 
 // Импорт пользовательских PropTypes
-//import { ingredientPropType } from '../../../../utils/prop-types.js';
+import { ingredientPropType } from '../../utils/prop-types';
 
 // Компонент для отображения ингредиента
 export default function Ingredient({ data }) {
@@ -136,3 +137,8 @@ export default function Ingredient({ data }) {
     </>
   );
 }
+
+// Определение PropTypes для компонента
+Ingredient.propTypes = {
+  data: ingredientPropType.isRequired,
+};

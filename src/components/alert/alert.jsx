@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Подключение стилей и данных
 import styles from './alert.module.css';
@@ -24,3 +25,13 @@ export default function Alert({ title, text, image }) {
     </div>
   );
 }
+
+// Определение PropTypes для компонента Alert.
+Alert.propTypes = {
+  title: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  image: PropTypes.shape({
+    src: PropTypes.string.isRequired,
+    alt: PropTypes.string.isRequired,
+  }).isRequired,
+};

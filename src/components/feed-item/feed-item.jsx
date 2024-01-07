@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
-import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // Подключение компонентов
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import FeedIcon from '../feed-icon/feed-icon';
 import FeedItemPrice from '../feed-item-price/feed-item-price';
 
@@ -10,6 +10,7 @@ import FeedItemPrice from '../feed-item-price/feed-item-price';
 import styles from './feed-item.module.css';
 import formatDateTime from '../../utils/formatDateTime';
 import isEmpty from '../../utils/isEmpty';
+import { orderPropType } from '../../utils/prop-types';
 
 export default function FeedItem({ data }) {
   const location = useLocation(); // Получаем объект местоположения из библиотеки React Router
@@ -65,3 +66,8 @@ export default function FeedItem({ data }) {
     </li>
   );
 }
+
+// Определение PropTypes для компонента
+FeedItem.propTypes = {
+  data: PropTypes.shape(orderPropType).isRequired,
+};

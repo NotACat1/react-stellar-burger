@@ -38,6 +38,7 @@ export default function Modal({ children, title, onClose }) {
   );
 }
 
+// Определение PropTypes для компонента
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string,

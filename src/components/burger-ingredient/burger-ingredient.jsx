@@ -125,8 +125,9 @@ export default function Ingredient({ position, isIconVisible, data }) {
   );
 }
 
-//Ingredient.propTypes = {
-//  position: PropTypes.oneOf(['top', 'bottom']),
-//  isIconVisible: PropTypes.bool.isRequired,
-//  data: ingredientPropType,
-//};
+// Определение PropTypes для компонента
+Ingredient.propTypes = {
+  position: PropTypes.oneOf(['top', 'bottom']),
+  isIconVisible: PropTypes.bool.isRequired,
+  data: ingredientPropType,
+};

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Подключение компонентов
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -20,3 +21,8 @@ export default function EmptyBurgerMessage({ message }) {
     </div>
   );
 }
+
+// Определение PropTypes для компонента
+EmptyBurgerMessage.propTypes = {
+  message: PropTypes.string.isRequired, // message должно быть строкой и обязательным свойством
+};

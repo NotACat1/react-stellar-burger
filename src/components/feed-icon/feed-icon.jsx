@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
 
 // Подключение стилей и данных
 import styles from './feed-icon.module.css';
@@ -28,3 +29,10 @@ export default function FeedIcon({ id, zIndex, col }) {
     </div>
   );
 }
+
+// Определение PropTypes для компонента
+FeedIcon.propTypes = {
+  id: PropTypes.string.isRequired,
+  zIndex: PropTypes.number.isRequired,
+  col: PropTypes.number,
+};

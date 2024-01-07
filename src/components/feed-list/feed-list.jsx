@@ -1,11 +1,13 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // Подключение компонентов
 import FeedItem from '../feed-item/feed-item';
 
 // Подключение стилей и данных
 import styles from './feed-list.module.css';
+import { orderPropType } from '../../utils/prop-types';
 
 // Компонент, отображающий список заказов
 export default function FeedList({ data }) {
@@ -25,3 +27,8 @@ export default function FeedList({ data }) {
     </div>
   );
 }
+
+// Определение PropTypes для компонента
+FeedList.propTypes = {
+  data: PropTypes.shape(orderPropType),
+};

@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Подключение стилей и данных
 import styles from './energy-item.module.css';
-import PropTypes from 'prop-types';
 
 // Компонент отображения числовых показатель ингридиента
 export default function EnergyItem({ data }) {
@@ -19,7 +19,10 @@ export default function EnergyItem({ data }) {
   );
 }
 
-//EnergyItem.propTypes = {
-//  label: PropTypes.string.isRequired,
-//  amount: PropTypes.number.isRequired,
-//};
+// Определение PropTypes для компонента
+EnergyItem.propTypes = {
+  data: PropTypes.shape({
+    label: PropTypes.string.isRequired,
+    amount: PropTypes.number.isRequired,
+  }).isRequired,
+};

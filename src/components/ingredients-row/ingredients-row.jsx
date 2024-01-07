@@ -52,6 +52,10 @@ export default function IngredientsRow({ data }) {
   );
 }
 
-//IngredientsRow.propTypes = {
-//  tab: PropTypes.oneOf(Object.keys(COMPONENT_TABS)).isRequired,
-//};
+// Определение PropTypes для компонента
+IngredientsRow.propTypes = {
+  data: PropTypes.shape({
+    tabKey: PropTypes.string.isRequired,
+    tabName: PropTypes.string.isRequired,
+  }).isRequired,
+};

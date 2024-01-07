@@ -17,6 +17,7 @@ export default function ModalHeader({ title, close }) {
   );
 }
 
+// Определение PropTypes для компонента
 ModalHeader.propTypes = {
   title: PropTypes.string,
   close: PropTypes.func.isRequired,

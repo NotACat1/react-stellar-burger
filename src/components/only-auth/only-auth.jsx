@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // Подключение Redux
 import { useSelector } from 'react-redux';
@@ -16,3 +17,8 @@ export default function OnlyAuth({ element }) {
   // Если есть, возвращаем переданный элемент, иначе выполняем перенаправление на страницу входа.
   return !isEmpty(userInfo) ? element : <Navigate to="/login" replace />;
 }
+
+// Определение PropTypes для компонента
+OnlyAuth.propTypes = {
+  element: PropTypes.element.isRequired,
+};

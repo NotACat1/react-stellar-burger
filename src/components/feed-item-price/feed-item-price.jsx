@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 // Подключение компонентов
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -34,3 +34,8 @@ export default function FeedItemPrice({ data = [] }) {
     </p>
   );
 }
+
+// Определение PropTypes для компонента
+FeedItemPrice.propTypes = {
+  FeedItemPrice: PropTypes.arrayOf(PropTypes.string),
+};

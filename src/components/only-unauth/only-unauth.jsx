@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // Подключение Redux
 import { useSelector } from 'react-redux';
@@ -14,3 +15,8 @@ export default function OnlyUnauth({ element, path }) {
   // Отображение указанного элемента, если пользователь не аутентифицирован, в противном случае перенаправление на указанный путь
   return !isEmpty(userInfo) ? <Navigate to={path} replace /> : element;
 }
+
+// Определение PropTypes для компонента
+OnlyUnauth.propTypes = {
+  element: PropTypes.element.isRequired,
+};
