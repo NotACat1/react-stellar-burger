@@ -91,3 +91,26 @@ export const ERRORS = {
 
 // Имя cookie для хранения refreshToken
 export const REFRESH_TOKEN_COOKIE_NAME = 'refreshToken';
+
+export const MAIN_PATHS = {
+  home: '/',
+  ingredientDetails: '/ingredients/:ingredientId',
+  login: '/login',
+  register: '/register',
+  forgotPassword: '/forgot-password',
+  resetPassword: '/reset-password',
+  profile: '/profile',
+  feed: '/feed',
+  feedDetails: '/feed/:feedNumber',
+  feedStatus: '/feed/:feedNumber/status',
+  newFeed: '/new-feed',
+  profileOrdersStatus: '/profile/orders/:feedNumber/status',
+  notFound: '*',
+};
+
+export const PROFILE_PATHS = {
+  profileForm: '',
+  orders: 'orders',
+  ordersDetails: 'orders/:feedNumber',
+  ordersStatus: 'orders/:feedNumber/status',
+};

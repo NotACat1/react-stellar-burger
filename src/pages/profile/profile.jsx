@@ -13,6 +13,7 @@ import { logout } from '../../services/thunk/user';
 
 // Подключение стилей и данных
 import styles from './profile.module.css';
+import { MAIN_PATHS, PROFILE_PATHS } from '../../utils/constants';
 
 export default function ProfilePage() {
   const location = useLocation(); // Хук для получения текущего URL
@@ -33,9 +34,9 @@ export default function ProfilePage() {
   // Текстовое описание раздела в зависимости от текущего URL
   const textProfile = useMemo(() => {
     switch (location.pathname) {
-      case '/profile':
+      case MAIN_PATHS.profile:
         return 'В этом разделе вы можете изменить свои персональные данные';
-      case '/profile/orders':
+      case `${MAIN_PATHS.profile}/${PROFILE_PATHS.orders}`:
         return 'В этом разделе вы можете просмотреть свою историю заказов';
       default:
         return '';
@@ -44,10 +45,10 @@ export default function ProfilePage() {
 
   // Массив объектов с маршрутами и соответствующими компонентами
   const routes = [
-    { path: '', element: <ProfileForm /> },
-    { path: 'orders', element: <FeedUser /> },
-    { path: 'orders/:feedNumber', element: <FeedDetails /> },
-    { path: 'orders/:feedNumber/status', element: <FeedStatus /> },
+    { path: PROFILE_PATHS.profileForm, element: <ProfileForm /> },
+    { path: PROFILE_PATHS.orders, element: <FeedUser /> },
+    { path: PROFILE_PATHS.ordersDetails, element: <FeedDetails /> },
+    { path: PROFILE_PATHS.ordersStatus, element: <FeedStatus /> },
   ];
 
   // Основной JSX компонента
@@ -56,17 +57,20 @@ export default function ProfilePage() {
       <nav className={styles.navigation}>
         <ul className={styles.list}>
           <li>
-            <NavLink className={setLinkStyle('/profile')} to="">
+            <NavLink className={setLinkStyle(MAIN_PATHS.profile)} to={PROFILE_PATHS.profileForm}>
               Профиль
             </NavLink>
           </li>
           <li>
-            <NavLink className={setLinkStyle('/profile/orders')} to="/profile/orders">
+            <NavLink
+              className={setLinkStyle(`${MAIN_PATHS.profile}/${PROFILE_PATHS.orders}`)}
+              to={PROFILE_PATHS.orders}
+            >
               История заказов
             </NavLink>
           </li>
           <li>
-            <NavLink onClick={handleLogout} className={setLinkStyle('/login')} to="/login">
+            <NavLink onClick={handleLogout} className={setLinkStyle(MAIN_PATHS.login)} to={MAIN_PATHS.login}>
               Выход
             </NavLink>
           </li>
