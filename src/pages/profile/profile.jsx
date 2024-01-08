@@ -47,8 +47,8 @@ export default function ProfilePage() {
   const routes = [
     { path: PROFILE_PATHS.profileForm, element: <ProfileForm /> },
     { path: PROFILE_PATHS.orders, element: <FeedUser /> },
-    { path: PROFILE_PATHS.ordersDetails, element: <FeedDetails /> },
-    { path: PROFILE_PATHS.ordersStatus, element: <FeedStatus /> },
+    { path: PROFILE_PATHS.orderDetails, element: <FeedDetails /> },
+    { path: PROFILE_PATHS.orderStatus, element: <FeedStatus /> },
   ];
 
   // Основной JSX компонента

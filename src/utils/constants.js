@@ -104,13 +104,14 @@ export const MAIN_PATHS = {
   feedDetails: '/feed/:feedNumber',
   feedStatus: '/feed/:feedNumber/status',
   newFeed: '/new-feed',
-  profileOrdersStatus: '/profile/orders/:feedNumber/status',
+  profileOrderDetails: '/profile/orders/:feedNumber',
+  profileOrderStatus: '/profile/orders/:feedNumber/status',
   notFound: '*',
 };
 
 export const PROFILE_PATHS = {
   profileForm: '',
   orders: 'orders',
-  ordersDetails: 'orders/:feedNumber',
-  ordersStatus: 'orders/:feedNumber/status',
+  orderDetails: 'orders/:feedNumber',
+  orderStatus: 'orders/:feedNumber/status',
 };

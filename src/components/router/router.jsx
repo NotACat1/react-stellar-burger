@@ -81,7 +81,7 @@ export default function Router() {
       ),
     },
     {
-      path: MAIN_PATHS.feedDetails,
+      path: MAIN_PATHS.profileOrderDetails,
       element: (
         <Modal onClose={closeModal}>
           <FeedDetails />
@@ -89,7 +89,7 @@ export default function Router() {
       ),
     },
     {
-      path: MAIN_PATHS.profileOrdersStatus,
+      path: MAIN_PATHS.profileOrderStatus,
       element: (
         <Modal onClose={closeModal}>
           <FeedStatus />
