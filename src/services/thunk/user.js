@@ -1,4 +1,4 @@
-import { REFRESH_TOKEN_COOKIE_NAME } from '../../utils/constants';
+import { REFRESH_TOKEN_COOKIE_NAME, TOKEN_EXPIRED_ERROR, UNAUTHORIZED_ERROR } from '../../utils/constants';
 import apiService from '../../utils/ApiService';
 import cookieManager from '../../utils/cookieManager';
 
@@ -71,7 +71,12 @@ export const getUserData = (accessToken) => async (dispatch) => {
     const userData = await apiService.getUserData(accessToken);
     dispatch(getUserDataSuccess(userData.user));
   } catch (error) {
-    apiService.handleApiError(error, dispatch, cookieManager.getCookie(REFRESH_TOKEN_COOKIE_NAME));
+    if (error.status === TOKEN_EXPIRED_ERROR || error.status === UNAUTHORIZED_ERROR) {
+      await handleTokenRefresh(dispatch, async (newAccessToken) => {
+        const registrationData = await apiService.register(newAccessToken);
+        dispatch(registrationSuccess(registrationData));
+      });
+    }
     dispatch(getUserDataFailed(error));
   }
 };
@@ -84,18 +89,27 @@ export const sendUserData = (accessToken, { name, email, password }) =>
       const sendData = await apiService.sendUserData(accessToken, { name, email, password });
       dispatch(sendUserDataSuccess(sendData.user));
     } catch (error) {
-      apiService.handleApiError(error, dispatch, cookieManager.getCookie(REFRESH_TOKEN_COOKIE_NAME));
+      if (error.status === TOKEN_EXPIRED_ERROR || error.status === UNAUTHORIZED_ERROR) {
+        await handleTokenRefresh(dispatch, async (newAccessToken) => {
+          const sendData = await apiService.sendUserData(newAccessToken, { name, email, password });
+          dispatch(sendUserDataSuccess(sendData.user));
+        });
+      }
       dispatch(sendUserDataFailed(error));
     }
   };
 
 // Обновление refreshToken
-export const refreshToken = (refreshToken) => async (dispatch) => {
+export const handleTokenRefresh = async (dispatch, onSuccess) => {
   dispatch(startRefreshToken());
   try {
-    const refreshTokenData = await apiService.refreshToken(refreshToken);
-    dispatch(refreshTokenSuccess(refreshTokenData.accessToken));
-    cookieManager.refreshCookie(REFRESH_TOKEN_COOKIE_NAME, refreshTokenData.refreshToken);
+    if (!cookieManager.getCookie(REFRESH_TOKEN_COOKIE_NAME))
+      throw new Error(`Не найден куки файл ${REFRESH_TOKEN_COOKIE_NAME}`);
+    const refreshData = await apiService.refreshToken(cookieManager.getCookie(REFRESH_TOKEN_COOKIE_NAME));
+    // Установка refreshToken в cookie
+    cookieManager.refreshCookie(REFRESH_TOKEN_COOKIE_NAME, refreshData.refreshToken);
+    dispatch(refreshTokenSuccess(refreshData.accessToken));
+    onSuccess(refreshData.accessToken); // Вызов переданной функции успеха
   } catch (error) {
     dispatch(refreshTokenFailed(error));
   }

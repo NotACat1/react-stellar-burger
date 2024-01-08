@@ -1,5 +1,4 @@
-import { BASE_URL, TOKEN_EXPIRED_ERROR, UNAUTHORIZED_ERROR } from './constants';
-import { refreshToken } from '../services/thunk/user';
+import { BASE_URL } from './constants';
 
 // Класс для работы с API
 class ApiService {
@@ -206,15 +205,6 @@ class ApiService {
       return this._handleResponse(res);
     } catch (error) {
       return Promise.reject(error);
-    }
-  }
-
-  // Обработка ошибок от API
-  handleApiError(error, dispatch, token) {
-    // Проверяем, если ошибка связана с истекшим токеном или неавторизованным доступом
-    if (error.status === TOKEN_EXPIRED_ERROR || error.status === UNAUTHORIZED_ERROR) {
-      // Вызываем функцию обновления refreshToken
-      dispatch(refreshToken(token));
     }
   }
 }
