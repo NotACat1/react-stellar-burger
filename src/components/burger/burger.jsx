@@ -63,7 +63,7 @@ export default function Burger() {
   return (
     <ul
       ref={drop}
-      style={{ opacity: isHover ? 0.5 : 1, flexGrow: hasBun && hasIngredients ? 0 : 1 }}
+      style={{ opacity: isHover ? 0.5 : 1 }}
       className={styles.burgerList}
     >
       {!isEmpty(hasBun) ? (

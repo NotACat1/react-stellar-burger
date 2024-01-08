@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from '../../services/thunk/ingredients';
 import { getUserData } from '../../services/thunk/user';
 
-// Подключение стилей
+// Подключение стилей и данных
 import styles from './app.module.css';
 import { ERRORS } from '../../utils/constants';
 
@@ -30,7 +30,7 @@ export default function App() {
   const fetchData = useCallback(() => {
     dispatch(getUserData(accessToken)); // Запрос данных пользователя
     dispatch(getIngredients()); // Запрос списка ингредиентов
-  }, [dispatch, accessToken]);
+  }, [dispatch]);
 
   // Загрузка данных пользователя и ингредиентов при монтировании компонента
   useEffect(() => {
