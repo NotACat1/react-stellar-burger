@@ -1,32 +1,42 @@
-// Action Types
-import { SET_ACTIVE_TAB, SET_SCROLL_REF_ACTION } from '../actions/tabs';
+// Импорт типов действий для управления вкладками
+import { SET_ACTIVE_TAB, SET_SCROLL_REF } from '../types/tabs';
 
-// Импорт данных для вкладок
-import { COMPONENT_TABS } from '../../utils/data';
+// Импорт констант, связанных с компонентами вкладок
+import { COMPONENT_TABS } from '../../utils/constants';
 
-// Начальное состояние для редьюсера вкладок
+// Получение ключей вкладок из объекта COMPONENT_TABS
+const componentTabsKeys = Object.entries(COMPONENT_TABS);
+
+// Начальное состояние хранилища вкладок
 const initialState = {
-  activeTab: Object.keys(COMPONENT_TABS)[0], // Активная вкладка по умолчанию
-  scrollRef: {}, // Ссылки на элементы для прокрутки
+  tabs: componentTabsKeys, // Массив ключей вкладок
+  activeTab: componentTabsKeys[0][0], // Активная вкладка по умолчанию
+  refs: {}, // Объект для хранения ссылок на элементы
 };
 
-// Редьюсер для управления состоянием вкладок
-export const tabsReducer = (state = initialState, action) => {
-  const { type, payload } = action;
+// Редуктор для управления состоянием вкладок
+export const tabsReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    // Обработка действия установки активной вкладки
     case SET_ACTIVE_TAB:
+      if (COMPONENT_TABS[payload])
+        // Обработка действия установки активной вкладки
+        return {
+          ...state,
+          activeTab: payload,
+        };
       return {
         ...state,
-        activeTab: payload,
+        activeTab: componentTabsKeys[0][0],
       };
-    // Обработка действия установки ссылок на элементы для прокрутки
-    case SET_SCROLL_REF_ACTION:
+    case SET_SCROLL_REF:
+      // Обработка действия установки ссылок на элементы для прокрутки
       return {
         ...state,
-        scrollRefs: { ...state.scrollRefs, ...payload },
+        refs: { ...state.refs, ...payload },
       };
+
     default:
+      // Возвращение текущего состояния в случае отсутствия совпадений с типами действий
       return state;
   }
 };
