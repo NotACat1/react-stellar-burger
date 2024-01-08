@@ -30,5 +30,5 @@ export default function FeedList({ data }) {
 
 // Определение PropTypes для компонента
 FeedList.propTypes = {
-  data: PropTypes.shape(orderPropType),
+  data: PropTypes.arrayOf(orderPropType),
 };

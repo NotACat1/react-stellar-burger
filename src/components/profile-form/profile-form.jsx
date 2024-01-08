@@ -10,6 +10,7 @@ import { sendUserData } from '../../services/thunk/user';
 // Подключение стилей и данных
 import styles from './profile-form.module.css';
 import useForm from '../../utils/useForm';
+import shallowEqual from '../../utils/shallowEqual';
 
 export default function ProfileForm() {
   // Получение диспетчера Redux и состояния пользователя
@@ -19,7 +20,7 @@ export default function ProfileForm() {
     isRequestingSendUserData: isReques,
     hasRequestSendUserDataFailed: hasRequesFailed,
     information: userInfo,
-  } = useSelector((state) => state.userData);
+  } = useSelector((state) => state.userData, shallowEqual);
 
   // Использование хука для управления значениями формы
   const { values, handleChange, setValues } = useForm({ name: userInfo.name, email: userInfo.email, password: '' });

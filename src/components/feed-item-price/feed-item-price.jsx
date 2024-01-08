@@ -9,11 +9,12 @@ import { useSelector } from 'react-redux';
 
 // Подключение стилей и данных
 import styles from './feed-item-price.module.css';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Компонент, отображающий цену для элемента ленты
 export default function FeedItemPrice({ data = [] }) {
   // Получаем доступ к данным о ингредиентах из хранилища
-  const ingredients = useSelector((state) => state.ingredientsData.ingredients);
+  const ingredients = useSelector((state) => state.ingredientsData.ingredients, shallowEqual);
 
   // Создаем объект-карту, сопоставляющий идентификатор ингредиента его цене
   const ingredientMap = ingredients.reduce((map, ingredient) => {

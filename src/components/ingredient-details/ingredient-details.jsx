@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 // Подключение стилей
 import styles from './ingredient-details.module.css';
 import { DEFAULT_INFO_INGREDIENT } from '../../utils/constants';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Основной компонент для информации об ингридиенте
 export default function IngredientDetails() {
@@ -17,7 +18,7 @@ export default function IngredientDetails() {
   const { ingredientId } = useParams();
 
   // Получение данных об ингредиентах из Redux
-  const { ingredients } = useSelector((state) => state.ingredientsData);
+  const { ingredients } = useSelector((state) => state.ingredientsData, shallowEqual);
 
   // Поиск ингредиента по id
   let selectedIngredient = ingredients.find((ingredient) => ingredient._id === ingredientId);

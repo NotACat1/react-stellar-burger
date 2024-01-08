@@ -10,12 +10,13 @@ import { setScrollRef } from '../../services/actions/tabs';
 
 // Подключение стилей и данных
 import styles from './ingredients-row.module.css';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Компонент строки с ингредиентами для конкретной вкладки
 export default function IngredientsRow({ data }) {
   // Получение диспетчера Redux и списка всех ингредиентов
   const dispatch = useDispatch();
-  const allIngredients = useSelector((state) => state.ingredientsData.ingredients);
+  const allIngredients = useSelector((state) => state.ingredientsData.ingredients, shallowEqual);
 
   // Разделение данных вкладки на ключ и название
   const { tabKey, tabName } = data;

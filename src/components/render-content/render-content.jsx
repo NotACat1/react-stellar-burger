@@ -27,12 +27,15 @@ export default function RenderContent({ isLoading, hasError, error, children }) 
 
 // Определение PropTypes для компонента
 RenderContent.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  hasError: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool,
+  hasError: PropTypes.bool,
   error: PropTypes.shape({
     title: PropTypes.string,
     text: PropTypes.string,
-    image: PropTypes.string,
+    image: PropTypes.shape({
+      src: PropTypes.string.isRequired,
+      alt: PropTypes.string.isRequired,
+    }),
   }),
   children: PropTypes.node,
 };

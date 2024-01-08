@@ -15,12 +15,13 @@ import { DndProvider } from 'react-dnd';
 
 // Подключение стилей и данных
 import styles from './home.module.css';
+import shallowEqual from '../../utils/shallowEqual';
 
 export default function HomePage() {
   // Получение диспетчера Redux и активной вкладки и ссылок на элементы
   const dispatch = useDispatch();
-  const ingredients = useSelector((state) => state.ingredientsData.ingredients);
-  const isOrder = useSelector((state) => state.burgerData.isOrder);
+  const ingredients = useSelector((state) => state.ingredientsData.ingredients, shallowEqual);
+  const isOrder = useSelector((state) => state.burgerData.isOrder, shallowEqual);
 
   // Импорт хука для работы с параметрами строки запроса
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,17 +35,16 @@ export default function HomePage() {
     if (isOrder) {
       setSearchParams({ bun: null, ingredients: null });
       dispatch(setOrderState(false));
-    } else {
-      if (bunBurgerId) {
-        const dataBun = ingredients.find((ingredient) => ingredient._id === bunBurgerId);
-        if (dataBun) dispatch(addBun(dataBun));
-      }
-      if (bunIngredientsIds) {
-        bunIngredientsIds.split(',').forEach((id) => {
-          const dataIngredient = ingredients.find((ingredient) => ingredient._id === id);
-          if (dataIngredient) dispatch(addIngredient(dataIngredient));
-        });
-      }
+    }
+    if (bunBurgerId) {
+      const dataBun = ingredients.find((ingredient) => ingredient._id === bunBurgerId);
+      if (dataBun) dispatch(addBun(dataBun));
+    }
+    if (bunIngredientsIds) {
+      bunIngredientsIds.split(',').forEach((id) => {
+        const dataIngredient = ingredients.find((ingredient) => ingredient._id === id);
+        if (dataIngredient) dispatch(addIngredient(dataIngredient));
+      });
     }
   }, [dispatch, ingredients]);
 

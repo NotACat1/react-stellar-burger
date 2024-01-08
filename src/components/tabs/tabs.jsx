@@ -10,12 +10,13 @@ import { setActiveTab } from '../../services/actions/tabs';
 // Подключение стилей и данных
 import styles from './tabs.module.css';
 import scrollToRef from '../../utils/scrollToRef';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Компонент вкладок для выбора категории ингредиентов
 export default function Tabs() {
   // Получение диспетчера Redux и активной вкладки и ссылок на элементы
   const dispatch = useDispatch();
-  const { tabs: itemsTabs, activeTab, refs: refsTabs } = useSelector((state) => state.tabsData);
+  const { tabs: itemsTabs, activeTab, refs: refsTabs } = useSelector((state) => state.tabsData, shallowEqual);
 
   // Обработчик изменения вкладки
   const handleTabChange = useCallback(

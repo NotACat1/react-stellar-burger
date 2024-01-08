@@ -5,13 +5,14 @@ import PropTypes from 'prop-types';
 // Подключение Redux
 import { useSelector } from 'react-redux';
 import isEmpty from '../../utils/isEmpty';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Компонент OnlyAuth проверяет наличие информации о пользователе в хранилище Redux.
 // Если информация о пользователе присутствует, возвращает переданный элемент,
 // в противном случае перенаправляет на страницу входа.
 export default function OnlyAuth({ element }) {
   // Получаем информацию о пользователе из хранилища Redux.
-  const userInfo = useSelector((state) => state.userData.information);
+  const userInfo = useSelector((state) => state.userData.information, shallowEqual);
 
   // Проверяем, есть ли информация о пользователе.
   // Если есть, возвращаем переданный элемент, иначе выполняем перенаправление на страницу входа.

@@ -13,6 +13,7 @@ import styles from './feed-status.module.css';
 import { ERRORS } from '../../utils/constants';
 import successImg from '../../assets/images/done.gif';
 import getStatusMessage from '../../utils/getStatusMessage';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Основной компонент для информации об ингридиенте
 // Экспортируем компонент по умолчанию
@@ -23,7 +24,7 @@ export default function FeedStatus() {
   const { feedNumber } = useParams();
 
   // Извлекаем данные из глобального состояния с помощью хука useSelector
-  const { information, request, requestFailed } = useSelector(({ orderData }) => orderData);
+  const { information, request, requestFailed } = useSelector(({ orderData }) => orderData, shallowEqual);
 
   // Хук useEffect используется для выполнения действий после рендера компонента
   useEffect(() => {

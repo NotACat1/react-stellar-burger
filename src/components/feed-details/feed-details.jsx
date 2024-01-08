@@ -10,18 +10,18 @@ import RenderContent from '../render-content/render-content';
 import { useDispatch, useSelector } from 'react-redux';
 import { getInformationOrder } from '../../services/thunk/order';
 
-// Подключение стилей
+// Подключение стилей и данных
 import styles from './feed-details.module.css';
 import { ERRORS } from '../../utils/constants';
 import formatDateTime from '../../utils/formatDateTime';
 import getStatusMessage from '../../utils/getStatusMessage';
-import isEmpty from '../../utils/isEmpty';
 import mapIngredientsToCountArray from '../../utils/mapIngredientsToCountArray';
+import shallowEqual from '../../utils/shallowEqual';
 
 export default function FeedDetails() {
   // Инициализация диспетчера для отправки действий в Redux
   const dispatch = useDispatch();
-  const { information, isRequesting, hasRequestFailed } = useSelector((state) => state.orderData);
+  const { information, isRequesting, hasRequestFailed } = useSelector((state) => state.orderData, shallowEqual);
 
   // Получение параметра feedNumber из URL с использованием хука useParams
   const { feedNumber } = useParams();

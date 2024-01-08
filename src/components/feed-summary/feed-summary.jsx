@@ -10,11 +10,12 @@ import { useSelector } from 'react-redux';
 // Подключение стилей и данных
 import styles from './feed-summary.module.css';
 import { ORDER_STATUSES } from '../../utils/constants';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Основной компонент FeedSummary
 export default function FeedSummary() {
   // Получение данных из Redux-стейта с использованием хука useSelector
-  const { total, totalToday, orders } = useSelector((state) => state.ordersData);
+  const { total, totalToday, orders } = useSelector((state) => state.ordersData, shallowEqual);
 
   // Используем useMemo для мемоизации отфильтрованных заказов и предотвращения лишних вычислений при изменении других зависимостей
   const filteredOrders = useMemo(() => {

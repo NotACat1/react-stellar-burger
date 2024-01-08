@@ -10,11 +10,12 @@ import { useSelector } from 'react-redux';
 // Подключение стилей и данных
 import styles from './burger-constructor.module.css';
 import isEmpty from '../../utils/isEmpty';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Основной компонент для страницы с ингредиентами бургера
 export default function BurgerConstructor() {
   // Используем хук useSelector для получения данных из Redux-стейта
-  const { bun: burgerBun, ingredients: burgerIngredients } = useSelector((state) => state.burgerData);
+  const { bun: burgerBun, ingredients: burgerIngredients } = useSelector((state) => state.burgerData, shallowEqual);
 
   // Проверка на наличие булки и ингредиентов перед отображением PriceBox
   const shouldRenderPriceBox = !isEmpty(burgerBun) && !isEmpty(burgerIngredients);

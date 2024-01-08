@@ -7,10 +7,13 @@ import styles from './feed-icon.module.css';
 // Подключение Redux
 import { useSelector } from 'react-redux';
 
+// Подключение стилей и данных
+import shallowEqual from '../../utils/shallowEqual';
+
 // Компонент FeedIcon, представляющий иконку ингредиента в ленте
 export default function FeedIcon({ id, zIndex, col }) {
   // Получение списка ингредиентов из глобального состояния приложения
-  const ingredients = useSelector((state) => state.ingredientsData.ingredients);
+  const ingredients = useSelector((state) => state.ingredientsData.ingredients, shallowEqual);
 
   // Поиск ингредиента по id и извлечение из него необходимых данных (изображение и имя)
   const { image_mobile: image, name } = useMemo(() => ingredients.find((ingredient) => ingredient._id === id), [ingredients, id]);
@@ -33,6 +36,6 @@ export default function FeedIcon({ id, zIndex, col }) {
 // Определение PropTypes для компонента
 FeedIcon.propTypes = {
   id: PropTypes.string.isRequired,
-  zIndex: PropTypes.number.isRequired,
+  zIndex: PropTypes.number,
   col: PropTypes.number,
 };

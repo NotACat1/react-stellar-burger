@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 // Подключение компонентов
 import RenderContent from '../../components/render-content/render-content';
@@ -9,13 +9,15 @@ import { useSelector } from 'react-redux';
 
 // Подключение стилей
 import { ERRORS } from '../../utils/constants';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Основной компонент приложения
 export default function NewFeedPage() {
   const state = { background: '/' };
 
   // Извлечение данных из состояния Redux
-  const { isRequesting, hasRequestFailed, order } = useSelector((state) => state.burgerData);
+  const { isRequesting, hasRequestFailed, order } = useSelector((state) => state.burgerData, shallowEqual);
+
   return (
     <RenderContent isLoading={isRequesting} hasError={hasRequestFailed} error={ERRORS.placeOrder}>
       <Navigate to={`/feed/${order}/status`} state={state} replace={true} />

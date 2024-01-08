@@ -10,6 +10,7 @@ import { setActiveTab } from '../../services/actions/tabs';
 // Подключение стилей и данных
 import styles from './ingredients.module.css';
 import { TAB_OFFSET, ROW_HEIGHT_THRESHOLD } from '../../utils/constants';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Компонент отображения ингредиентов
 export default function Ingredients() {
@@ -17,7 +18,7 @@ export default function Ingredients() {
   const dispatch = useDispatch();
 
   // Получение состояний из Redux
-  const { tabs: tabsData, activeItem: activeTab, refs: tabsRefs } = useSelector((state) => state.tabsData);
+  const { tabs: tabsData, activeItem: activeTab, refs: tabsRefs } = useSelector((state) => state.tabsData, shallowEqual);
 
   // Функция для расчета расстояния от верха контейнера до ближайшей вкладки
   const calculateDistanceFromTop = useCallback(

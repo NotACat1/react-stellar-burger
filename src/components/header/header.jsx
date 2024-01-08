@@ -9,14 +9,14 @@ import { useSelector } from 'react-redux';
 
 // Подключение стилей
 import styles from './header.module.css';
-import isEmpty from '../../utils/isEmpty';
+import shallowEqual from '../../utils/shallowEqual';
 
 export default function Header() {
   // Получение текущего местоположения
   const currentLocation = useLocation();
 
   // Получение информации о пользователе из Redux
-  const userInformation = useSelector((store) => store.userData.information);
+  const userInformation = useSelector((store) => store.userData.information, shallowEqual);
 
   // Функция для определения типа иконки на основе текущего местоположения
   const getIconType = (url) => (currentLocation.pathname === url ? 'primary' : 'secondary');

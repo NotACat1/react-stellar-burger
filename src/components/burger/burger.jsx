@@ -15,12 +15,13 @@ import { useDrop } from 'react-dnd';
 // Подключение стилей и данных
 import styles from './burger.module.css';
 import isEmpty from '../../utils/isEmpty';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Компонент для ингредиентов бургера
 export default function Burger() {
   // Получение диспетчера Redux и данных о булочке и ингредиентах из Redux-стейта
   const dispatch = useDispatch();
-  const { bun: burgerBun, ingredients: burgerIngredients } = useSelector((state) => state.burgerData);
+  const { bun: burgerBun, ingredients: burgerIngredients } = useSelector((state) => state.burgerData, shallowEqual);
 
   // Получаем объект searchParams и метод для его обновления
   const [urlSearchParams, setUrlSearchParams] = useSearchParams();

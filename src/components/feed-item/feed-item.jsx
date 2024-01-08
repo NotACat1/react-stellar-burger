@@ -69,5 +69,5 @@ export default function FeedItem({ data }) {
 
 // Определение PropTypes для компонента
 FeedItem.propTypes = {
-  data: PropTypes.shape(orderPropType).isRequired,
+  data: orderPropType.isRequired,
 };

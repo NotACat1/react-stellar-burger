@@ -10,11 +10,12 @@ import { useSelector } from 'react-redux';
 
 // Подключение стилей и данных
 import styles from './feed-ingredient.module.css';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Компонент FeedIngredient принимает id и count в качестве свойств
 export default function FeedIngredient({ id, count }) {
   // Получение списка ингредиентов из состояния Redux
-  const ingredients = useSelector((state) => state.ingredientsData.ingredients);
+  const ingredients = useSelector((state) => state.ingredientsData.ingredients, shallowEqual);
   // Использование useMemo для мемоизации данных об ингредиенте по id
   const ingredient = useMemo(() => ingredients.find((ingredients) => ingredients._id === id), [ingredients, id]);
 

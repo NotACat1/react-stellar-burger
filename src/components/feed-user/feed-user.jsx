@@ -11,13 +11,14 @@ import { wsUserOrdersConnectionStart, wsUserOrdersConnectionClosed } from '../..
 // Подключение стилей и данных
 import styles from './feed-user.module.css';
 import { ERRORS } from '../../utils/constants';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Компонент, отображающий информацию о заказах пользователя
 export default function FeedUser() {
   const dispatch = useDispatch();
 
   // Получение данных о заказах, состояния загрузки и ошибки из глобального состояния
-  const { orders, isLoading, hasConnectionFailed } = useSelector((state) => state.userData);
+  const { orders, isLoading, hasConnectionFailed } = useSelector((state) => state.userData, shallowEqual);
 
   // useEffect для управления WebSocket-соединением при монтировании и размонтировании компонента
   useEffect(() => {

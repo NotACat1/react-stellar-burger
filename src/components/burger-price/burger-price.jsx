@@ -11,6 +11,7 @@ import { sendNewOrder } from '../../services/thunk/burger';
 // Подключение стилей и данных
 import styles from './burger-price.module.css';
 import isEmpty from '../../utils/isEmpty';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Компонент для отображения цены бургера и кнопки оформления заказа
 export default function PriceBox() {
@@ -18,8 +19,8 @@ export default function PriceBox() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const { bun: selectedBun, ingredients: selectedIngredients } = useSelector((state) => state.burgerData);
-  const { accessToken: token } = useSelector((state) => state.userData);
+  const { bun: selectedBun, ingredients: selectedIngredients } = useSelector((state) => state.burgerData, shallowEqual);
+  const { accessToken: token } = useSelector((state) => state.userData, shallowEqual);
 
   // Создаем массив идентификаторов ингредиентов для заказа
   const orderItems = useMemo(() => {
@@ -38,9 +39,10 @@ export default function PriceBox() {
   // Обработчик клика по кнопке оформления заказа
   const handleOrderButtonClick = () => {
     // Отправляем заказ в Redux
-    dispatch(sendNewOrder(token, orderItems));
     const state = { background: location };
     navigate(`/new-feed`, { state, replace: true });
+
+    dispatch(sendNewOrder(token, orderItems));
   };
 
   // Проверяем, есть ли выбранные булочка и ингредиенты

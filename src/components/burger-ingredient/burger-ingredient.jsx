@@ -17,6 +17,7 @@ import styles from './burger-ingredient.module.css';
 
 // Импорт пользовательских PropTypes
 import { ingredientPropType } from '../../utils/prop-types.js';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Компонент ингридиента бургера
 export default function Ingredient({ position, isIconVisible, data }) {
@@ -24,7 +25,7 @@ export default function Ingredient({ position, isIconVisible, data }) {
   const dispatch = useDispatch();
 
   // Получение массива ингредиентов из Redux-состояния
-  const burgerIngredients = useSelector((state) => state.burgerData.ingredients);
+  const burgerIngredients = useSelector((state) => state.burgerData.ingredients, shallowEqual);
 
   // Получаем объект searchParams и метод для его обновления через react-router-dom
   const [urlSearchParams, setUrlSearchParams] = useSearchParams();

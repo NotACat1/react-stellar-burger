@@ -22,6 +22,7 @@ import rightClickIcon from '../../assets/images/right-сlick-icon.png';
 
 // Импорт пользовательских PropTypes
 import { ingredientPropType } from '../../utils/prop-types';
+import shallowEqual from '../../utils/shallowEqual';
 
 // Компонент для отображения ингредиента
 export default function Ingredient({ data }) {
@@ -33,7 +34,7 @@ export default function Ingredient({ data }) {
   const dispatch = useDispatch();
 
   // Получение данных о булке и ингредиентах из Redux-стейта
-  const { bun: burgerBun, ingredients: burgerIngredients } = useSelector((state) => state.burgerData);
+  const { bun: burgerBun, ingredients: burgerIngredients } = useSelector((state) => state.burgerData, shallowEqual);
 
   // Получение объекта для работы с параметрами запроса из react-router-dom
   const [searchParams, setSearchParams] = useSearchParams();
