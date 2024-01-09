@@ -17,14 +17,6 @@ const cookieManager = {
     return cookie ? cookie.substring(cookieName.length, cookie.length) : null;
   },
 
-  // Функция для обновления куки (с обновлением таймера на 7 дней)
-  refreshCookie: (name) => {
-    const token = cookieManager.getCookie(name);
-    if (token) {
-      cookieManager.setCookie(name, token, 7);
-    }
-  },
-
   // Функция для удаления куки по имени
   deleteCookie: (name) => {
     const expirationDate = new Date(0); // Установка времени истечения в 0

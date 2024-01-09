@@ -72,12 +72,19 @@ export const getUserData = (accessToken) => async (dispatch) => {
     dispatch(getUserDataSuccess(userData.user));
   } catch (error) {
     if (error.status === TOKEN_EXPIRED_ERROR || error.status === UNAUTHORIZED_ERROR) {
-      await handleTokenRefresh(dispatch, async (newAccessToken) => {
-        const registrationData = await apiService.register(newAccessToken);
-        dispatch(registrationSuccess(registrationData));
-      });
+      await handleTokenRefresh(
+        dispatch,
+        async (newAccessToken) => {
+          const newUserData = await apiService.getUserData(newAccessToken);
+          dispatch(getUserDataSuccess(newUserData));
+        },
+        (refreshError) => {
+          dispatch(getUserDataFailed(refreshError));
+        },
+      );
+    } else {
+      dispatch(getUserDataFailed(error));
     }
-    dispatch(getUserDataFailed(error));
   }
 };
 
@@ -90,28 +97,37 @@ export const sendUserData = (accessToken, { name, email, password }) =>
       dispatch(sendUserDataSuccess(sendData.user));
     } catch (error) {
       if (error.status === TOKEN_EXPIRED_ERROR || error.status === UNAUTHORIZED_ERROR) {
-        await handleTokenRefresh(dispatch, async (newAccessToken) => {
-          const sendData = await apiService.sendUserData(newAccessToken, { name, email, password });
-          dispatch(sendUserDataSuccess(sendData.user));
-        });
+        await handleTokenRefresh(
+          dispatch,
+          async (newAccessToken) => {
+            const sendData = await apiService.sendUserData(newAccessToken, { name, email, password });
+            dispatch(sendUserDataSuccess(sendData.user));
+          },
+          (refreshError) => {
+            dispatch(sendUserDataFailed(refreshError));
+          },
+        );
+      } else {
+        dispatch(sendUserDataFailed(error));
       }
-      dispatch(sendUserDataFailed(error));
     }
   };
 
 // Обновление refreshToken
-export const handleTokenRefresh = async (dispatch, onSuccess) => {
+export const handleTokenRefresh = async (dispatch, onSuccess, onFailed) => {
   dispatch(startRefreshToken());
   try {
-    if (!cookieManager.getCookie(REFRESH_TOKEN_COOKIE_NAME))
+    if (!cookieManager.getCookie(REFRESH_TOKEN_COOKIE_NAME)) {
       throw new Error(`Не найден куки файл ${REFRESH_TOKEN_COOKIE_NAME}`);
+    }
     const refreshData = await apiService.refreshToken(cookieManager.getCookie(REFRESH_TOKEN_COOKIE_NAME));
     // Установка refreshToken в cookie
-    cookieManager.refreshCookie(REFRESH_TOKEN_COOKIE_NAME, refreshData.refreshToken);
+    cookieManager.setCookie(REFRESH_TOKEN_COOKIE_NAME, refreshData.refreshToken);
     dispatch(refreshTokenSuccess(refreshData.accessToken));
     onSuccess(refreshData.accessToken); // Вызов переданной функции успеха
   } catch (error) {
     dispatch(refreshTokenFailed(error));
+    onFailed(error);
   }
 };
 
