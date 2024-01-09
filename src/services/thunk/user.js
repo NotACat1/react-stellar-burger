@@ -76,7 +76,7 @@ export const getUserData = (accessToken) => async (dispatch) => {
         dispatch,
         async (newAccessToken) => {
           const newUserData = await apiService.getUserData(newAccessToken);
-          dispatch(getUserDataSuccess(newUserData));
+          dispatch(getUserDataSuccess(newUserData.user));
         },
         (refreshError) => {
           dispatch(getUserDataFailed(refreshError));
