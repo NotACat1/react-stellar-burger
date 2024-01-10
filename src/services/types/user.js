@@ -29,11 +29,6 @@ export const START_LOGOUT = 'START_LOGOUT'; // Начало процесса в�
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'; // Успешный выход из системы
 export const LOGOUT_FAILED = 'LOGOUT_FAILED'; // Неудачный выход из системы
 
-// Действия с токенами
-export const START_REFRESH_TOKEN = 'START_REFRESH_TOKEN'; // Начало процесса обновления токена
-export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN_SUCCESS'; // Успешное обновление токена
-export const REFRESH_TOKEN_FAILED = 'REFRESH_TOKEN_FAILED'; // Неудачное обновление токена
-
 // Другие действия
 export const SET_FORGOT_PASSWORD_STATE = 'SET_FORGOT_PASSWORD_STATE'; // Установка состояния восстановления пароля
 

@@ -8,8 +8,6 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_FAILED,
   LOGOUT_SUCCESS,
-  REFRESH_TOKEN_FAILED,
-  REFRESH_TOKEN_SUCCESS,
   REGISTRATION_FAILED,
   REGISTRATION_SUCCESS,
   RESET_PASSWORD_FAILED,
@@ -21,7 +19,6 @@ import {
   START_FORGOT_PASSWORD,
   START_LOGIN,
   START_LOGOUT,
-  START_REFRESH_TOKEN,
   START_REGISTRATION,
   START_RESET_PASSWORD,
   WS_CLOSED,
@@ -45,11 +42,6 @@ export const loginFailed = (error = 'Unknown error') => ({ type: LOGIN_FAILED, p
 export const startLogout = () => ({ type: START_LOGOUT });
 export const logoutSuccess = () => ({ type: LOGOUT_SUCCESS });
 export const logoutFailed = (error = 'Unknown error') => ({ type: LOGOUT_FAILED, payload: error });
-
-// Действия связанные с обновлением токена
-export const startRefreshToken = () => ({ type: START_REFRESH_TOKEN });
-export const refreshTokenSuccess = (token) => ({ type: REFRESH_TOKEN_SUCCESS, payload: token });
-export const refreshTokenFailed = (error = 'Unknown error') => ({ type: REFRESH_TOKEN_FAILED, payload: error });
 
 // Действия связанные с процессом регистрации
 export const startRegistration = () => ({ type: START_REGISTRATION });

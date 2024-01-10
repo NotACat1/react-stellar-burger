@@ -21,14 +21,14 @@ export default function App() {
   const dispatch = useDispatch();
 
   // Извлечение данных из состояния Redux
-  const { isRequestingGetUserData, accessToken } = useSelector((state) => state.userData);
+  const { isRequestingGetUserData } = useSelector((state) => state.userData);
   const { isRequesting: isRequestingGetIngredients, hasRequestFailed: hasRequestGetIngredientsFailed } = useSelector(
     (state) => state.ingredientsData,
   );
 
   // Функция для получения данных пользователя и ингредиентов
   const fetchData = useCallback(() => {
-    dispatch(getUserData(accessToken)); // Запрос данных пользователя
+    dispatch(getUserData()); // Запрос данных пользователя
     dispatch(getIngredients()); // Запрос списка ингредиентов
   }, [dispatch]);
 

@@ -5,7 +5,7 @@ import { fetchOrder, fetchOrderFailed, fetchOrderSuccess } from '../actions/orde
 import apiService from '../../utils/ApiService';
 import cookieManager from '../../utils/cookieManager';
 import isEmpty from '../../utils/isEmpty';
-import { REFRESH_TOKEN_COOKIE_NAME } from '../../utils/constants';
+import { TOKEN_NAMES } from '../../utils/constants';
 
 // Асинхронная функция получения информации о заказе по его номеру
 const getOrderInfo = async (number) => {
@@ -35,7 +35,7 @@ export const getInformationOrder = (number) => async (dispatch) => {
     dispatch(fetchOrderSuccess(orders[0]));
   } catch (error) {
     // Обработка ошибок API и диспатч действия о неудачном завершении запроса
-    apiService.handleApiError(error, dispatch, cookieManager.getCookie(REFRESH_TOKEN_COOKIE_NAME));
+    apiService.handleApiError(error, dispatch, cookieManager.getCookie(TOKEN_NAMES.refreshToken));
     dispatch(fetchOrderFailed(error));
   }
 };

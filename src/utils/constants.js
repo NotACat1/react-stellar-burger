@@ -26,6 +26,7 @@ export const ROW_HEIGHT_THRESHOLD = 30;
 
 // Константа для установки стандартного срока годности
 export const DEFAULT_EXPIRATION_DAYS = 7;
+export const DEFAULT_EXPIRATION_TIME = 20 * 60 * 1000;
 
 // Стандартные данные об ингредиенте, используемые при отсутствии информации
 export const DEFAULT_INFO_INGREDIENT = {
@@ -89,8 +90,11 @@ export const ERRORS = {
   },
 };
 
-// Имя cookie для хранения refreshToken
-export const REFRESH_TOKEN_COOKIE_NAME = 'refreshToken';
+// Имя cookies
+export const TOKEN_NAMES = {
+  refreshToken: 'refreshToken',
+  accessToken: 'accessToken',
+};
 
 export const MAIN_PATHS = {
   home: '/',

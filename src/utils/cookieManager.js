@@ -1,4 +1,4 @@
-import { DEFAULT_EXPIRATION_DAYS } from './constants';
+import { DEFAULT_EXPIRATION_DAYS, DEFAULT_EXPIRATION_TIME } from './constants';
 
 const cookieManager = {
   // Функция для установки куки
@@ -9,12 +9,27 @@ const cookieManager = {
     document.cookie = `${name}=${value}; ${expires}; path=/`;
   },
 
+  // Универсальная функция для установки куки с произвольным временем
+  setCookieWithCustomExpiration: (name, value, expirationTimeInMs = DEFAULT_EXPIRATION_TIME) => {
+    const expirationDate = new Date();
+    expirationDate.setTime(expirationDate.getTime() + expirationTimeInMs); // Время в миллисекундах
+    const expires = `expires=${expirationDate.toUTCString()}`;
+    document.cookie = `${name}=${value}; ${expires}; path=/`;
+  },
+
   // Функция для получения значения куки по имени
   getCookie: (name) => {
     const cookieName = `${name}=`;
     const cookieArray = document.cookie.split(';');
-    const cookie = cookieArray.find((cookie) => cookie.trim().indexOf(cookieName) === 0);
-    return cookie ? cookie.substring(cookieName.length, cookie.length) : null;
+
+    for (const cookie of cookieArray) {
+      const trimmedCookie = cookie.trim();
+
+      if (trimmedCookie.startsWith(cookieName)) {
+        return trimmedCookie.slice(cookieName.length);
+      }
+    }
+    return null;
   },
 
   // Функция для удаления куки по имени

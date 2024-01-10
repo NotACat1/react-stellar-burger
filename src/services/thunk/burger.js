@@ -7,7 +7,7 @@ import apiService from '../../utils/ApiService';
 import cookieManager from '../../utils/cookieManager';
 
 // Импорт константы имени куки для обновления токена
-import { REFRESH_TOKEN_COOKIE_NAME } from '../../utils/constants';
+import { TOKEN_NAMES } from '../../utils/constants';
 
 // Экспорт функции sendNewOrder, принимающей accessToken и ingredients, а возвращающей функцию
 export const sendNewOrder = (accessToken, ingredients) => async (dispatch) => {
@@ -26,7 +26,7 @@ export const sendNewOrder = (accessToken, ingredients) => async (dispatch) => {
     dispatch(deleteAllIngredients());
   } catch (error) {
     // Обработка ошибки через apiService и передача дополнительных параметров
-    apiService.handleApiError(error, dispatch, cookieManager.getCookie(REFRESH_TOKEN_COOKIE_NAME));
+    apiService.handleApiError(error, dispatch, cookieManager.getCookie(TOKEN_NAMES.refreshToken));
 
     // Диспатч действия sendOrderFailed с переданной ошибкой
     dispatch(sendOrderFailed(error));

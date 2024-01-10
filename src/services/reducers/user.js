@@ -8,8 +8,6 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_FAILED,
   LOGOUT_SUCCESS,
-  REFRESH_TOKEN_FAILED,
-  REFRESH_TOKEN_SUCCESS,
   REGISTRATION_FAILED,
   REGISTRATION_SUCCESS,
   RESET_PASSWORD_FAILED,
@@ -21,7 +19,6 @@ import {
   START_FORGOT_PASSWORD,
   START_LOGIN,
   START_LOGOUT,
-  START_REFRESH_TOKEN,
   START_REGISTRATION,
   START_RESET_PASSWORD,
   WS_CLOSED,
@@ -44,12 +41,9 @@ const initialState = {
   hasRequestGetUserDataFailed: false,
   isRequestingLogout: false,
   hasRequestLogoutFailed: false,
-  isRequestingRefreshToken: false,
-  hasRequestRefreshTokenFailed: false,
   isRequestingSendUserData: false,
   hasRequestSendUserDataFailed: false,
   isPasswordForgot: false,
-  accessToken: null,
   isLoading: false,
   isConnection: false,
   hasConnectionFailed: false,
@@ -68,12 +62,10 @@ export const userReducer = (state = initialState, { type, payload }) => {
       };
     }
     case REGISTRATION_SUCCESS: {
-      const { user, accessToken } = payload;
       return {
         ...state,
         isRequestingRegistration: false,
-        accessToken: accessToken,
-        information: user,
+        information: payload,
       };
     }
     case REGISTRATION_FAILED: {
@@ -95,8 +87,7 @@ export const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isRequestingLogin: false,
-        accessToken: payload.accessToken,
-        information: payload.user,
+        information: payload,
       };
     }
     case LOGIN_FAILED: {
@@ -191,28 +182,6 @@ export const userReducer = (state = initialState, { type, payload }) => {
         ...state,
         isRequestingLogout: false,
         hasRequestLogoutFailed: true,
-        errors: [...state.errors, payload],
-      };
-    }
-    case START_REFRESH_TOKEN: {
-      return {
-        ...state,
-        isRequestingRefreshToken: true,
-        hasRequestRefreshTokenFailed: false,
-      };
-    }
-    case REFRESH_TOKEN_SUCCESS: {
-      return {
-        ...state,
-        isRequestingRefreshToken: false,
-        accessToken: payload,
-      };
-    }
-    case REFRESH_TOKEN_FAILED: {
-      return {
-        ...state,
-        isRequestingRefreshToken: false,
-        hasRequestRefreshTokenFailed: true,
         errors: [...state.errors, payload],
       };
     }

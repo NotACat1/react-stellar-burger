@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 // Подключение стилей
 import styles from './header.module.css';
 import shallowEqual from '../../utils/shallowEqual';
+import { MAIN_PATHS } from '../../utils/constants';
 
 export default function Header() {
   // Получение текущего местоположения
@@ -33,15 +34,15 @@ export default function Header() {
 
   // Конфигурации каждой ссылки
   const linkConfigurations = [
-    { to: '/', label: 'Конструктор', icon: <BurgerIcon type={getIconType('/')} /> },
-    { to: '/feed', label: 'Лента заказов', icon: <ListIcon type={getIconType('/feed')} /> },
+    { to: MAIN_PATHS.home, label: 'Конструктор', icon: <BurgerIcon type={getIconType(MAIN_PATHS.home)} /> },
+    { to: MAIN_PATHS.feed, label: 'Лента заказов', icon: <ListIcon type={getIconType(MAIN_PATHS.feed)} /> },
   ];
 
   // Конфигурации ссылки в личный кабинет
   const linkConfigurationProfile = {
-    to: '/profile',
+    to: MAIN_PATHS.profile,
     label: userInformation.name ? userInformation.name : 'Личный кабинет',
-    icon: <ProfileIcon type={getIconType('/feed')} />,
+    icon: <ProfileIcon type={getIconType(MAIN_PATHS.profile)} />,
   };
 
   return (
@@ -59,7 +60,7 @@ export default function Header() {
           ))}
         </ul>
         {/* Использование обычной ссылки для логотипа */}
-        <Link to="/" className={styles.logo}>
+        <Link to={MAIN_PATHS.home} className={styles.logo}>
           <Logo />
         </Link>
         {/* Использование NavLink для навигации в кабинет пользователя */}

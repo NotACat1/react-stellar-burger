@@ -1,3 +1,6 @@
+import cookieManager from '../../utils/cookieManager';
+import { TOKEN_NAMES } from '../../utils/constants';
+
 // Middleware для работы с WebSocket
 export const socketMiddleware = (wsUrl, wsActions) => {
   return (store) => {
@@ -10,11 +13,11 @@ export const socketMiddleware = (wsUrl, wsActions) => {
       const { type } = action; // Извлечение типа действия из параметра
 
       // Извлечение данных пользователя из состояния хранилища
-      const { userData } = getState();
+      const accessToken = cookieManager.getCookie(TOKEN_NAMES.accessToken);
 
       // Инициализация WebSocket при получении действия wsInit
       if (type === wsInit) {
-        const token = userData?.accessToken?.replace('Bearer ', ''); // Извлечение токена из данных пользователя
+        const token = accessToken?.replace('Bearer ', ''); // Извлечение токена из данных пользователя
         socket = new WebSocket(`${wsUrl}?token=${token}`); // Создание объекта WebSocket с передачей токена в URL
       }
 

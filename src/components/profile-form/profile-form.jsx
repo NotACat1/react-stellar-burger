@@ -16,7 +16,6 @@ export default function ProfileForm() {
   // Получение диспетчера Redux и состояния пользователя
   const dispatch = useDispatch();
   const {
-    accessToken: userToken,
     isRequestingSendUserData: isReques,
     hasRequestSendUserDataFailed: hasRequesFailed,
     information: userInfo,
@@ -39,7 +38,7 @@ export default function ProfileForm() {
     // Проверка валидности формы и наличия изменений
     if (!isFormValid || !isFormChanged) return;
     // Отправка данных
-    dispatch(sendUserData(userToken, values));
+    dispatch(sendUserData(values));
   };
 
   // Обработчик отмены редактирования
