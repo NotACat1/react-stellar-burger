@@ -21,9 +21,6 @@ import FeedUser from '../feed-user/feed-user';
 import ProfileForm from '../profile-form/profile-form';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route';
 
-// Подключение стилей и данных
-import { MAIN_PATHS } from '../../utils/constants';
-
 // Основной компонент для управления маршрутизацией
 export default function Router() {
   const location = useLocation();
@@ -36,7 +33,7 @@ export default function Router() {
 
   const routesBackground = [
     {
-      path: MAIN_PATHS.ingredientDetails,
+      path: '/ingredients/:ingredientId',
       element: (
         <Modal title="Детали ингредиента" onClose={closeModal}>
           <IngredientDetails />
@@ -44,7 +41,7 @@ export default function Router() {
       ),
     },
     {
-      path: MAIN_PATHS.feedDetails,
+      path: '/feed/:feedNumber',
       element: (
         <Modal onClose={closeModal}>
           <FeedDetails />
@@ -52,7 +49,7 @@ export default function Router() {
       ),
     },
     {
-      path: MAIN_PATHS.feedStatus,
+      path: '/feed/:feedNumber/status',
       element: (
         <Modal onClose={closeModal}>
           <FeedStatus />
@@ -60,7 +57,7 @@ export default function Router() {
       ),
     },
     {
-      path: MAIN_PATHS.newFeed,
+      path: '/new-feed',
       element: (
         <Modal onClose={closeModal}>
           <NewFeedPage />
@@ -76,7 +73,7 @@ export default function Router() {
       ),
     },
     {
-      path: MAIN_PATHS.profileOrderStatus,
+      path: '/profile/orders/:feedNumber/status',
       element: (
         <Modal onClose={closeModal}>
           <FeedStatus />

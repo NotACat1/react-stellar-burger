@@ -12,7 +12,6 @@ import { sendNewOrder } from '../../services/thunk/burger';
 import styles from './burger-price.module.css';
 import isEmpty from '../../utils/isEmpty';
 import shallowEqual from '../../utils/shallowEqual';
-import { MAIN_PATHS } from '../../utils/constants';
 
 // Компонент для отображения цены бургера и кнопки оформления заказа
 export default function PriceBox() {
@@ -40,12 +39,12 @@ export default function PriceBox() {
   // Обработчик клика по кнопке оформления заказа
   const handleOrderButtonClick = () => {
     if (isEmpty(userInfo)) {
-      navigate(MAIN_PATHS.login);
+      navigate("/login");
       return;
     }
     // Отправляем заказ в Redux
     const state = { background: location };
-    navigate(MAIN_PATHS.newFeed, { state, replace: true });
+    navigate("/new-feed", { state, replace: true });
 
     dispatch(sendNewOrder(orderItems));
   };

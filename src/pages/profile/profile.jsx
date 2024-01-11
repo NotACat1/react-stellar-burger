@@ -1,17 +1,17 @@
-import React, { useMemo } from 'react';
-import { NavLink, useLocation, Outlet } from 'react-router-dom';
+import React, { useMemo, useState } from 'react';
+import { NavLink, Outlet } from 'react-router-dom';
 
 // Подключение Redux
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { logout } from '../../services/thunk/user';
 
 // Подключение стилей и данных
 import styles from './profile.module.css';
-import { MAIN_PATHS, PROFILE_PATHS } from '../../utils/constants';
 
 export default function ProfilePage() {
-  const location = useLocation(); // Хук для получения текущего URL
   const dispatch = useDispatch(); // Хук для вызова действий Redux
+
+  const [currentPage, setCurrentPage] = useState('home');
 
   // Обработчик выхода из аккаунта
   const handleLogout = () => {
@@ -28,17 +28,9 @@ export default function ProfilePage() {
     [],
   );
 
-  // Текстовое описание раздела в зависимости от текущего URL
-  const textProfile = useMemo(() => {
-    switch (location.pathname) {
-      case MAIN_PATHS.profile:
-        return 'В этом разделе вы можете изменить свои персональные данные';
-      case `${MAIN_PATHS.profile}/${PROFILE_PATHS.orders}`:
-        return 'В этом разделе вы можете просмотреть свою историю заказов';
-      default:
-        return '';
-    }
-  }, [location.pathname]);
+  const changePage = (page) => {
+    setCurrentPage(page);
+  };
 
   // Основной JSX компонента
   return (
@@ -46,22 +38,25 @@ export default function ProfilePage() {
       <nav className={styles.navigation}>
         <ul className={styles.list}>
           <li>
-            <NavLink className={getLinkStyle} to="" end>
+            <NavLink onClick={() => changePage('home')} className={getLinkStyle} to="" end>
               Профиль
             </NavLink>
           </li>
           <li>
-            <NavLink className={getLinkStyle} to={PROFILE_PATHS.orders} end>
+            <NavLink onClick={() => changePage('orders')} className={getLinkStyle} to="orders" end>
               История заказов
             </NavLink>
           </li>
           <li>
-            <NavLink onClick={handleLogout} className={getLinkStyle} to={MAIN_PATHS.login} end>
+            <NavLink onClick={handleLogout} className={getLinkStyle} to="login" end>
               Выход
             </NavLink>
           </li>
         </ul>
-        <p className={`${styles.text} text text_type_main-default text_color_inactive`}>{textProfile}</p>
+        <p className={`${styles.text} text text_type_main-default text_color_inactive`}>
+          {currentPage === 'home' && 'В этом разделе вы можете изменить свои персональные данные'}
+          {currentPage === 'orders' && 'В этом разделе вы можете просмотреть свою историю заказов'}
+        </p>
       </nav>
       <Outlet />
     </div>

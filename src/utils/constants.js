@@ -95,27 +95,3 @@ export const TOKEN_NAMES = {
   refreshToken: 'refreshToken',
   accessToken: 'accessToken',
 };
-
-export const MAIN_PATHS = {
-  home: '/',
-  ingredientDetails: '/ingredients/:ingredientId',
-  login: '/login',
-  register: '/register',
-  forgotPassword: '/forgot-password',
-  resetPassword: '/reset-password',
-  profile: '/profile',
-  feed: '/feed',
-  feedDetails: '/feed/:feedNumber',
-  feedStatus: '/feed/:feedNumber/status',
-  newFeed: '/new-feed',
-  profileOrderDetails: '/profile/orders/:feedNumber',
-  profileOrderStatus: '/profile/orders/:feedNumber/status',
-  notFound: '*',
-};
-
-export const PROFILE_PATHS = {
-  profileForm: '',
-  orders: 'orders',
-  orderDetails: 'orders/:feedNumber',
-  orderStatus: 'orders/:feedNumber/status',
-};

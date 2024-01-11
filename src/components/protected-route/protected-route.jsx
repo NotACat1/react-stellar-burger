@@ -8,7 +8,6 @@ import Loader from '../loader/loader';
 // Подключение стилей и данных
 import isEmpty from '../../utils/isEmpty';
 import shallowEqual from '../../utils/shallowEqual';
-import { MAIN_PATHS } from '../../utils/constants';
 
 const Protected = ({ onlyUnAuth = false, element }) => {
   // isAuthChecked это флаг, показывающий что проверка токена произведена
@@ -30,12 +29,12 @@ const Protected = ({ onlyUnAuth = false, element }) => {
   if (onlyUnAuth && !isEmptyUserInfo) {
     // Пользователь авторизован, но роут предназначен для неавторизованного пользователя
     // Делаем редирект на главную страницу или на тот адрес, что записан в location.state.from
-    const { from } = location.state || { from: { pathname: MAIN_PATHS.home } };
+    const { from } = location.state || { from: { pathname: '/' } };
     return <Navigate to={from} />;
   }
 
   if (!onlyUnAuth && isEmptyUserInfo) {
-    return <Navigate to={MAIN_PATHS.login} state={{ from: location }} />;
+    return <Navigate to='/login' state={{ from: location }} />;
   }
 
   // !onlyUnAuth && user Пользователь авторизован и роут для авторизованного пользователя
