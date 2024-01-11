@@ -5,30 +5,46 @@ import { deleteAllIngredients, sendOrder, sendOrderFailed, sendOrderSuccess, set
 import apiService from '../../utils/ApiService';
 // Импорт объекта cookieManager из утилиты cookieManager
 import cookieManager from '../../utils/cookieManager';
+// Импорт класса cookieManager из утилиты cookieManager
+import CustomError from '../../utils/CustomError';
+// Импорт функции handleTokenRefresh
+import handleTokenRefresh from '../../utils/handleTokenRefresh';
 
 // Импорт константы имени куки для обновления токена
-import { TOKEN_NAMES } from '../../utils/constants';
+import { TOKEN_NAMES, TOKEN_EXPIRED_ERROR, UNAUTHORIZED_ERROR } from '../../utils/constants';
 
 // Экспорт функции sendNewOrder, принимающей accessToken и ingredients, а возвращающей функцию
-export const sendNewOrder = (accessToken, ingredients) => async (dispatch) => {
+export const sendNewOrder = (ingredients) => async (dispatch) => {
   // Диспатч действия sendOrder для уведомления о начале отправки заказа
   dispatch(sendOrder());
   try {
+    const accessToken = cookieManager.getCookie(TOKEN_NAMES.accessToken);
+    if (!accessToken) throw new CustomError(`Не найден куки файл ${TOKEN_NAMES.accessToken}`, TOKEN_EXPIRED_ERROR);
+
     // Отправка ингредиентов на сервер с использованием apiService
-    const newOrderData = await apiService.sendIngredients(accessToken, ingredients);
+    const orderData = await apiService.sendIngredients(accessToken, ingredients);
 
     // Диспатч действия sendOrderSuccess с номером успешно созданного заказа
-    dispatch(sendOrderSuccess(newOrderData.order.number));
+    dispatch(sendOrderSuccess(orderData.order.number));
 
     dispatch(setOrderState(true));
 
     // Диспатч действия deleteAllIngredients для удаления всех ингредиентов из заказа
     dispatch(deleteAllIngredients());
   } catch (error) {
-    // Обработка ошибки через apiService и передача дополнительных параметров
-    apiService.handleApiError(error, dispatch, cookieManager.getCookie(TOKEN_NAMES.refreshToken));
-
-    // Диспатч действия sendOrderFailed с переданной ошибкой
-    dispatch(sendOrderFailed(error));
+    if (error.status === TOKEN_EXPIRED_ERROR || error.status === UNAUTHORIZED_ERROR) {
+      await handleTokenRefresh(
+        async (newAccessToken) => {
+          const newOrderData = await apiService.sendIngredients(newAccessToken);
+          dispatch(sendOrderSuccess(newOrderData.order.number));
+        },
+        (refreshError) => {
+          dispatch(sendOrderFailed(refreshError));
+        },
+      );
+    } else {
+      // Диспатч действия sendOrderFailed с переданной ошибкой
+      dispatch(sendOrderFailed(error));
+    }
   }
 };

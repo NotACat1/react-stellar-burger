@@ -40,6 +40,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
         socket.onmessage = (event) => {
           const { data } = event;
           const { success, ...restParsedData } = JSON.parse(data); // Парсинг JSON-данных из сообщения
+          if (!success) dispatch({ type: onError, payload: event });
           dispatch({ type: onMessage, payload: restParsedData });
         };
 

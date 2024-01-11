@@ -12,7 +12,9 @@ export default function ModalHeader({ title, close }) {
   return (
     <div className={styles.header}>
       {title && <p className={`${styles.title} text text_type_main-large`}>{title}</p>}
-      <CloseIcon className={styles.btn} type="primary" onClick={close} />
+      <div className={styles.button}>
+        <CloseIcon type="primary" onClick={close} />
+      </div>
     </div>
   );
 }

@@ -37,7 +37,7 @@ const initialState = {
   hasRequestForgotPasswordFailed: false,
   isRequestingResetPassword: false,
   hasRequestResetPasswordFailed: false,
-  isRequestingGetUserData: false,
+  isRequestingGetUserData: true,
   hasRequestGetUserDataFailed: false,
   isRequestingLogout: false,
   hasRequestLogoutFailed: false,
@@ -244,6 +244,7 @@ export const userReducer = (state = initialState, { type, payload }) => {
     case WS_CLOSED:
       return {
         ...state,
+        isLoading: false,
         isConnection: false,
       };
     default: {

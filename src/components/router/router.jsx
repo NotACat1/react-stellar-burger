@@ -17,6 +17,8 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import FeedDetails from '../feed-details/feed-details';
 import FeedStatus from '../feed-status/feed-status';
+import FeedUser from '../feed-user/feed-user';
+import ProfileForm from '../profile-form/profile-form';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route';
 
 // Подключение стилей и данных
@@ -31,21 +33,6 @@ export default function Router() {
   const closeModal = () => {
     navigate(-1);
   };
-
-  // Массив объектов маршрутов
-  const routes = [
-    { path: MAIN_PATHS.home, element: <HomePage /> },
-    { path: MAIN_PATHS.ingredientDetails, element: <IngredientDetails /> },
-    { path: MAIN_PATHS.login, element: <OnlyUnAuth element={<LoginPage />} /> },
-    { path: MAIN_PATHS.register, element: <OnlyUnAuth element={<RegisterPage />}/> },
-    { path: MAIN_PATHS.forgotPassword, element: <OnlyUnAuth element={<ForgotPasswordPage />} /> },
-    { path: MAIN_PATHS.resetPassword, element: <OnlyUnAuth element={<ResetPasswordPage />} /> },
-    { path: `${MAIN_PATHS.profile}/*`, element: <OnlyAuth element={<ProfilePage />} /> },
-    { path: MAIN_PATHS.feed, element: <FeedPage /> },
-    { path: MAIN_PATHS.feedDetails, element: <FeedDetails /> },
-    { path: MAIN_PATHS.feedStatus, element: <FeedStatus /> },
-    { path: MAIN_PATHS.notFound, element: <NotFoundPage /> },
-  ];
 
   const routesBackground = [
     {
@@ -81,7 +68,7 @@ export default function Router() {
       ),
     },
     {
-      path: MAIN_PATHS.profileOrderDetails,
+      path: '/profile/orders/:feedNumber',
       element: (
         <Modal onClose={closeModal}>
           <FeedDetails />
@@ -102,9 +89,29 @@ export default function Router() {
   return (
     <>
       <Routes location={background || location}>
-        {routes.map(({ path, element }) => (
-          <Route key={path} path={path} element={element} />
-        ))}
+        <Route index element={<HomePage />} />
+        <Route path="/ingredients" element={<IngredientDetails />}>
+          <Route path=":ingredientId" element={<IngredientDetails />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+        <Route path="/login" element={<OnlyUnAuth element={<LoginPage />} />} />
+        <Route path="/register" element={<OnlyUnAuth element={<RegisterPage />} />} />
+        <Route path="/forgot-password" element={<OnlyUnAuth element={<ForgotPasswordPage />} />} />
+        <Route path="/reset-password" element={<OnlyUnAuth element={<ResetPasswordPage />} />} />
+        <Route path="/profile" element={<OnlyAuth element={<ProfilePage />} />}>
+          <Route index element={<ProfileForm />} />
+          <Route path="orders" element={<FeedUser />}>
+            <Route path=":feedNumber" element={<FeedDetails />} />
+            <Route path=":feedNumber/status" element={<FeedStatus />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+        <Route path="/feed" element={<FeedPage />}>
+          <Route path=":feedNumber" element={<FeedDetails />} />
+          <Route path=":feedNumber/status" element={<FeedStatus />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       {background && (
         <Routes>

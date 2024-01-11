@@ -1,6 +1,14 @@
-import { TOKEN_NAMES, TOKEN_EXPIRED_ERROR, UNAUTHORIZED_ERROR } from '../../utils/constants';
+// Импорт объекта apiService из утилиты ApiService
 import apiService from '../../utils/ApiService';
+// Импорт объекта cookieManager из утилиты cookieManager
 import cookieManager from '../../utils/cookieManager';
+// Импорт класса cookieManager из утилиты cookieManager
+import CustomError from '../../utils/CustomError';
+// Импорт функции handleTokenRefresh
+import handleTokenRefresh from '../../utils/handleTokenRefresh';
+
+// Импорт константы имени куки для обновления токена
+import { TOKEN_NAMES, TOKEN_EXPIRED_ERROR, UNAUTHORIZED_ERROR } from '../../utils/constants';
 
 import {
   forgotGetUserData,
@@ -71,7 +79,7 @@ export const getUserData = () => async (dispatch) => {
   try {
     const accessToken = cookieManager.getCookie(TOKEN_NAMES.accessToken);
     if (!accessToken)
-      throw new Error(`Не найден куки файл ${TOKEN_NAMES.accessToken}`, { status: TOKEN_EXPIRED_ERROR });
+      throw new CustomError(`Не найден куки файл ${TOKEN_NAMES.accessToken}`, TOKEN_EXPIRED_ERROR);
     const userData = await apiService.getUserData(accessToken);
     dispatch(getUserDataSuccess(userData.user));
   } catch (error) {
@@ -98,7 +106,7 @@ export const sendUserData = ({ name, email, password }) =>
     try {
       const accessToken = cookieManager.getCookie(TOKEN_NAMES.accessToken);
       if (!accessToken)
-        throw new Error(`Не найден куки файл ${TOKEN_NAMES.accessToken}`, { status: TOKEN_EXPIRED_ERROR });
+        throw new CustomError(`Не найден куки файл ${TOKEN_NAMES.accessToken}`, TOKEN_EXPIRED_ERROR);
       const sendData = await apiService.sendUserData(accessToken, { name, email, password });
       dispatch(sendUserDataSuccess(sendData.user));
     } catch (error) {
@@ -118,23 +126,6 @@ export const sendUserData = ({ name, email, password }) =>
       }
     }
   };
-
-// Обновление refreshToken
-export const handleTokenRefresh = async (onSuccess, onFailed) => {
-  try {
-    const token = cookieManager.getCookie(TOKEN_NAMES.refreshToken);
-    if (!token) {
-      throw new Error(`Не найден куки файл ${TOKEN_NAMES.refreshToken}`);
-    }
-    const { accessToken, refreshToken } = await apiService.refreshToken(refreshToken);
-    // Установка refreshToken и accessToken в cookie
-    cookieManager.setCookie(TOKEN_NAMES.refreshToken, refreshToken);
-    cookieManager.setCookieWithCustomExpiration(TOKEN_NAMES.accessToken, accessToken);
-    onSuccess(accessToken); // Вызов переданной функции успеха
-  } catch (error) {
-    onFailed(error);
-  }
-};
 
 // Запрос на восстановление пароля
 export const forgotPassword = (email) => async (dispatch) => {
