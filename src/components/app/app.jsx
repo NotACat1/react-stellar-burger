@@ -1,57 +1,62 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 // Подключение компонентов
-import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
-import OrderDetails from '../order-details/order-details';
+import Header from '../header/header';
+import Routes from '../router/router';
+import RenderContent from '../render-content/render-content';
 
 // Подключение Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { closeSelectedIngredient } from '../../services/actions/ingredient-details';
-import { closeOrderModal } from '../../services/actions/order-details';
+import { getIngredients } from '../../services/thunk/ingredients';
+import { getUserData } from '../../services/thunk/user';
 
-// Подключение стилей
+// Подключение стилей и данных
 import styles from './app.module.css';
+import { ERRORS } from '../../utils/constants';
 
 // Основной компонент приложения
 export default function App() {
-  // Получение диспетчера Redux и состояние открыия модального окна инридиентов
+  // Получение диспетчера Redux
   const dispatch = useDispatch();
-  // Получение состояния открытия модального окна выбранного ингредиента
-  const openModalIngredient = useSelector((state) => state.selectedIngredient.open);
-  // Деструктуризация состояния созданного заказа для модального окна заказа
-  const {
-    loading: loadingModalOrder, // Флаг загрузки данных заказа
-    error: errorModalOrder, // Ошибка, если есть
-    open: openModalOrder, // Флаг открытого состояния модального окна заказа
-  } = useSelector((state) => state.createdOrder);
 
-  // Функция для закрытия модального окна
-  const closeModal = () => {
-    if (openModalIngredient) dispatch(closeSelectedIngredient());
-    if (errorModalOrder === null && !loadingModalOrder && openModalOrder) dispatch(closeOrderModal());
-  };
+  // Извлечение данных из состояния Redux
+  const { isRequestingGetUserData } = useSelector((state) => state.userData);
+  const { isRequesting: isRequestingGetIngredients, hasRequestFailed: hasRequestGetIngredientsFailed } = useSelector(
+    (state) => state.ingredientsData,
+  );
 
+  // Функция для получения данных пользователя и ингредиентов
+  const fetchData = useCallback(() => {
+    dispatch(getUserData()); // Запрос данных пользователя
+    dispatch(getIngredients()); // Запрос списка ингредиентов
+  }, [dispatch]);
+
+  // Загрузка данных пользователя и ингредиентов при монтировании компонента
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  // Стили для контейнера
+  const mainContainerStyles = `${styles.container} pr-5 pl-5`;
+
+  // Возвращение разметки компонента
   return (
     <div className={styles.app}>
-      <AppHeader />
-      <main className={`${styles.main} pr-5 pl-5`}>
-        <BurgerIngredients />
-        <BurgerConstructor />
-      </main>
-      {openModalIngredient && (
-        <Modal title="Детали ингредиента" onClose={closeModal}>
-          <IngredientDetails />
-        </Modal>
-      )}
-      {errorModalOrder === null && !loadingModalOrder && openModalOrder && (
-        <Modal onClose={closeModal}>
-          <OrderDetails />
-        </Modal>
-      )}
+      <RenderContent
+        isLoading={isRequestingGetUserData && isRequestingGetIngredients}
+        hasError={hasRequestGetIngredientsFailed}
+        error={ERRORS.ingredients}
+      >
+        <Router>
+          <Header />
+          <main className={styles.main}>
+            <div className={mainContainerStyles}>
+              <Routes />
+            </div>
+          </main>
+        </Router>
+      </RenderContent>
     </div>
   );
 }

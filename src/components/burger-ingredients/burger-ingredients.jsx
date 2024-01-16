@@ -1,37 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 // Подключение компонентов
-import Tabs from './tabs/tabs';
-import Ingredients from './ingredients/ingredients';
-
-// Подключение Redux
-import { useSelector, useDispatch } from 'react-redux';
-import { getIngredients } from '../../services/actions/burger-ingredients';
+import Tabs from '../tabs/tabs';
+import Ingredients from '../ingredients/ingredients';
 
 // Подключение стилей
 import styles from './burger-ingredients.module.css';
 
 // Основной компонент для страницы с ингредиентами
 export default function BurgerIngredients() {
-  // Получение диспетчера Redux и состояние загрузки и ошибок
-  const dispatch = useDispatch();
-  const loading = useSelector((state) => state.ingredients.loading);
-  const error = useSelector((state) => state.ingredients.error);
-
-  // Эффект, выполняющий запрос на получение ингредиентов при загрузке компонента
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
-
   // Отображение компонента, если нет ошибок и данные загружены
   return (
-    error === null &&
-    !loading && (
-      <section className={styles.ingredients}>
-        <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
-        <Tabs />
-        <Ingredients />
-      </section>
-    )
+    <section className={`${styles.ingredients} pt-10 pb-10`}>
+      <h1 className="text text_type_main-large mb-5">Соберите бургер</h1>
+      <Tabs /> {/* Отображение вкладок */}
+      <Ingredients /> {/* Отображение ингредиентов */}
+    </section>
   );
 }

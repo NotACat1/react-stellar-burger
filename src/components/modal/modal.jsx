@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 // Подключение компонентов
-import ModalHeader from './modal-header/modal-header';
-import ModalOverlay from './modal-overlay/modal-overlay';
+import ModalHeader from '../modal-header/modal-header';
+import ModalOverlay from '../modal-overlay/modal-overlay';
 
 // Подключение стилей и данных
 import styles from './modal.module.css';
@@ -38,6 +38,7 @@ export default function Modal({ children, title, onClose }) {
   );
 }
 
+// Определение PropTypes для компонента
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string,

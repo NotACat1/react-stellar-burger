@@ -1,17 +1,19 @@
 import { combineReducers } from 'redux';
 
 // Подключение отдельных редюсеров
-import { ingredientsReducer } from './burger-ingredients'; // Редюсер ингредиентов
-import { burgerIngredientsReducer } from './burger-constructor'; // Редюсер ингредиентов бургера
-import { selectedIngredientReducer } from './ingredient-details'; // Редюсер выбранного ингредиента
-import { orderReducer } from './order-details'; // Редюсер заказов
-import { tabsReducer } from './tabs'; // Редюсер вкладок
+import { ingredientsReducer } from './ingredients'; // Редюсер ингредиентов
+import { tabsReducer } from './tabs';
+import { burgerReducer } from './burger';
+import { userReducer } from './user';
+import { ordersReducer } from './orders';
+import { orderReducer } from './order';
 
 // Корневой редюсер, объединяющий все редюсеры
 export const rootReducer = combineReducers({
-  ingredients: ingredientsReducer, // Хранилище ингредиентов
-  burgerIngredients: burgerIngredientsReducer, // Хранилище бургерных ингредиентов
-  selectedIngredient: selectedIngredientReducer, // Хранилище выбранного ингредиента
-  createdOrder: orderReducer, // Хранилище заказа
-  tabs: tabsReducer, // Хранилище вкладок
+  ingredientsData: ingredientsReducer,
+  tabsData: tabsReducer,
+  burgerData: burgerReducer,
+  userData: userReducer,
+  ordersData: ordersReducer,
+  orderData: orderReducer,
 });

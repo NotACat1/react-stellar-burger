@@ -1,20 +1,31 @@
-.info {
-  width: 520px;
+/* Определение стилей для контейнера */
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Центрирование по горизонтали */
+  align-items: center; /* Центрирование по вертикали */
 }
 
-.img {
+/* Определение стилей для блока информации */
+.info {
+  width: 520px; /* Ширина блока информации */
+}
+
+/* Определение стилей для изображения */
+.image {
   box-sizing: border-box;
   display: block;
   height: 240px;
   width: 100%;
-  object-fit: contain;
+  object-fit: contain; /* Масштабирование изображения с сохранением пропорций */
 }
 
+/* Определение стилей для списка */
 .list {
-  list-style: none;
-  padding-left: 0;
-  margin-bottom: 0;
-  display: flex;
-  gap: 20px;
-  justify-content: space-between;
+  list-style: none; /* Убираем маркеры списка */
+  padding-left: 0; /* Убираем отступ слева */
+  margin-bottom: 0; /* Убираем отступ снизу */
+  display: flex; /* Отображаем элементы списка в виде строки */
+  gap: calc(var(--offset-base-size) * 5); /* Расстояние между элементами списка */
+  justify-content: space-between; /* Равномерное распределение элементов по ширине контейнера */
 }
