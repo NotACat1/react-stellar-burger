@@ -2,7 +2,8 @@
   "name": "react-burger-starter",
   "version": "0.1.0",
   "description": "Stellar Burgers - это захватывающее космическое приложение, посвященное приготовлению и доставке космических бургеров во Вселенной. В настоящее время наша бургерная находится на краю света и имеет потенциал стать одним из самых прославленных заведений в космосе.",
-  "repository": {
+  "homepage": "https://notacat1.github.io/react-stellar-burger",
+	"repository": {
     "type": "git",
     "url": "git+https://github.com/NotACat1/react-stellar-burger.git"
   },
