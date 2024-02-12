@@ -6,7 +6,10 @@ import cookieManager from './cookieManager';
 import { TOKEN_NAMES } from './constants';
 
 // Обновление refreshToken
-export default async function handleTokenRefresh(onSuccess, onFailed) {
+export default async function handleTokenRefresh(
+  onSuccess: (accessToken: string) => void,
+  onFailed: (error: any) => void,
+) {
   try {
     const token = cookieManager.getCookie(TOKEN_NAMES.refreshToken);
     if (!token) {

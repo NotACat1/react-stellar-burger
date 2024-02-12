@@ -1,8 +1,13 @@
 // Импортируем функцию isEmpty из файла './isEmpty'
 import isEmpty from './isEmpty';
 
+interface IIngredientCount {
+  ingredient: string;
+  count: number;
+}
+
 // Экспортируем функцию mapIngredientsToCountArray, которая принимает массив ингредиентов
-export default function mapIngredientsToCountArray(ingredients) {
+export default function mapIngredientsToCountArray(ingredients: string[]): IIngredientCount[] {
   // Проверяем, является ли массив пустым с помощью функции isEmpty
   if (isEmpty(ingredients)) {
     // Если массив пуст, возвращаем пустой массив
@@ -10,7 +15,7 @@ export default function mapIngredientsToCountArray(ingredients) {
   }
 
   // Создаем новый объект Map для отслеживания количества каждого ингредиента
-  const ingredientCountMap = new Map();
+  const ingredientCountMap = new Map<string, number>();
 
   // Итерируем по массиву ингредиентов
   ingredients.forEach((ingredient) => {

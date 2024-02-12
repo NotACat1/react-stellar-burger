@@ -1,4 +1,4 @@
-export default function formatDateTime(inputDate) {
+export default function formatDateTime(inputDate: Date | string): string {
   const currentDate = new Date();
   const date = inputDate instanceof Date ? inputDate : new Date(inputDate);
 
@@ -6,7 +6,8 @@ export default function formatDateTime(inputDate) {
   date.setHours(date.getHours() + 3);
 
   // Функция для форматирования времени
-  const formatTime = (time) => time.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', hour12: false });
+  const formatTime = (time: Date) =>
+    time.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', hour12: false });
 
   const daysDifference = getDaysDifference(date, currentDate);
 
@@ -20,7 +21,7 @@ export default function formatDateTime(inputDate) {
   }
 }
 
-function getDaysDifference(date1, date2) {
+function getDaysDifference(date1: Date | string, date2: Date | string): number {
   // Один день в миллисекундах (24 часа * 60 минут * 60 секунд * 1000 миллисекунд)
   const oneDay = 24 * 60 * 60 * 1000;
 

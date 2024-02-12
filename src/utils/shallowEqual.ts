@@ -1,4 +1,4 @@
-export default function shallowEqual(prev, next) {
+export default function shallowEqual(prev: any, next: any): boolean {
   // Простое сравнение для примитивных типов
   if (prev === next) {
     return true;
@@ -28,7 +28,7 @@ export default function shallowEqual(prev, next) {
       return false;
     }
 
-    for (let key of prevKeys) {
+    for (const key of prevKeys) {
       if (prev[key] !== next[key]) {
         return false;
       }

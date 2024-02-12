@@ -1,14 +1,30 @@
+import { exact } from 'prop-types';
 import { BASE_URL } from './constants';
+import { IIngredientResponse } from './types/ingredients';
+import { IOrderResponse, IMyOrderResponse } from './types/order';
+import { IUserResponse, IUserOrderResponse } from './types/user';
+
+interface ITokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
+interface IRefreshTokenResponse extends ITokens {
+  success: boolean;
+}
 
 // Класс для работы с API
 class ApiService {
-  constructor(url) {
+  private _baseUrl: string;
+  private _apiUrl: string;
+
+  constructor(url: string = BASE_URL) {
     this._baseUrl = url;
-    this._apiUrl = `${url}/auth`; // Формирование URL для авторизации
+    this._apiUrl = `${url}/auth`;
   }
 
   // Обработка ответа от сервера
-  async _handleResponse(res) {
+  private async _handleResponse<T>(res: Response): Promise<T> {
     try {
       if (res.ok) {
         return await res.json();
@@ -21,7 +37,7 @@ class ApiService {
   }
 
   // Получение списка ингредиентов
-  async getIngredients() {
+  async getIngredients(): Promise<IIngredientResponse> {
     try {
       const res = await fetch(`${this._baseUrl}/ingredients`);
       return this._handleResponse(res);
@@ -31,7 +47,7 @@ class ApiService {
   }
 
   // Отправка ингредиентов на сервер
-  async sendIngredients(token, ids) {
+  async sendIngredients(token: string, ids: number[]): Promise<IMyOrderResponse> {
     try {
       const res = await fetch(`${this._baseUrl}/orders`, {
         method: 'POST',
@@ -50,7 +66,7 @@ class ApiService {
   }
 
   // Получение информации о заказе по номеру
-  async getOrderInfo(number) {
+  async getOrderInfo(number: string): Promise<IOrderResponse> {
     try {
       const res = await fetch(`${this._baseUrl}/orders/${number}`);
       return this._handleResponse(res);
@@ -60,7 +76,7 @@ class ApiService {
   }
 
   // Отправка запроса на сброс пароля по email
-  async sendEmail(email) {
+  async sendEmail(email: string): Promise<IUserResponse> {
     try {
       const res = await fetch(`${this._baseUrl}/password-reset`, {
         method: 'POST',
@@ -78,7 +94,7 @@ class ApiService {
   }
 
   // Сброс пароля с использованием токена
-  async resetPassword(token, password) {
+  async resetPassword(token?: string, password?: string): Promise<IUserResponse> {
     try {
       const res = await fetch(`${this._baseUrl}/password-reset/reset`, {
         method: 'POST',
@@ -97,7 +113,7 @@ class ApiService {
   }
 
   // Вход пользователя
-  async login({ email, password }) {
+  async login({ email, password }: { email?: string; password?: string }): Promise<IUserResponse & ITokens> {
     try {
       const res = await fetch(`${this._apiUrl}/login`, {
         method: 'POST',
@@ -116,7 +132,15 @@ class ApiService {
   }
 
   // Регистрация нового пользователя
-  async register({ email, name, password }) {
+  async register({
+    email,
+    name,
+    password,
+  }: {
+    email?: string;
+    name?: string;
+    password?: string;
+  }): Promise<IUserResponse & ITokens> {
     try {
       const res = await fetch(`${this._apiUrl}/register`, {
         method: 'POST',
@@ -136,7 +160,7 @@ class ApiService {
   }
 
   // Получение данных пользователя
-  async getUserData(token) {
+  async getUserData(token: string): Promise<IUserResponse> {
     try {
       const res = await fetch(`${this._apiUrl}/user`, {
         method: 'GET',
@@ -152,7 +176,10 @@ class ApiService {
   }
 
   // Отправка данных пользователя на сервер
-  async sendUserData(token, { name, email, password }) {
+  async sendUserData(
+    token: string,
+    { name, email, password }: { name?: string; email?: string; password?: string },
+  ): Promise<IUserResponse> {
     try {
       const res = await fetch(`${this._apiUrl}/user`, {
         method: 'PATCH',
@@ -173,7 +200,7 @@ class ApiService {
   }
 
   // Обновление токена доступа
-  async refreshToken(token) {
+  async refreshToken(token: string): Promise<IRefreshTokenResponse> {
     try {
       const res = await fetch(`${this._apiUrl}/token`, {
         method: 'POST',
@@ -191,7 +218,7 @@ class ApiService {
   }
 
   // Выход пользователя
-  async logout(token) {
+  async logout(token: string): Promise<IUserResponse> {
     try {
       const res = await fetch(`${this._apiUrl}/logout`, {
         method: 'POST',
@@ -210,5 +237,4 @@ class ApiService {
 }
 
 // Создание экземпляра ApiService с базовым URL
-const apiService = new ApiService(BASE_URL);
-export default apiService;
+export default new ApiService();

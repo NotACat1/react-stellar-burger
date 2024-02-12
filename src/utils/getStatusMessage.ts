@@ -1,8 +1,15 @@
 // Импорт статусов заказа из констант
 import { ORDER_STATUSES } from './constants';
 
+interface StatusMessage {
+  message: string;
+  className: string;
+  title: string;
+  text: string;
+}
+
 // Экспорт функции, возвращающей сообщение о статусе заказа
-export default function getStatusMessage(status) {
+export default function getStatusMessage(status: ORDER_STATUSES): StatusMessage {
   // Используем конструкцию switch для обработки различных значений статуса
   switch (status) {
     // В случае, если статус заказа - "Выполнен"

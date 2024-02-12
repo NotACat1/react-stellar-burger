@@ -1,6 +1,13 @@
 import { DEFAULT_EXPIRATION_DAYS, DEFAULT_EXPIRATION_TIME } from './constants';
 
-const cookieManager = {
+interface ICookieManager {
+  setCookie: (name: string, value: string, days?: number) => void;
+  setCookieWithCustomExpiration: (name: string, value: string, expirationTimeInMs?: number) => void;
+  getCookie: (name: string) => string | null;
+  deleteCookie: (name: string) => void;
+}
+
+const cookieManager: ICookieManager = {
   // Функция для установки куки
   setCookie: (name, value, days = DEFAULT_EXPIRATION_DAYS) => {
     const expirationDate = new Date();
