@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 // Подключение компонентов
@@ -6,7 +6,7 @@ import BurgerIngredients from '../../components/burger-ingredients/burger-ingred
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
 
 // Подключение Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { addBun, addIngredient, setOrderState } from '../../services/actions/burger';
 
 // react-dnd - библиотека для реализации перетаскивания и бросания (DnD)
@@ -17,11 +17,11 @@ import { DndProvider } from 'react-dnd';
 import styles from './home.module.css';
 import shallowEqual from '../../utils/shallowEqual';
 
-export default function HomePage() {
+const HomePage: FC = () => {
   // Получение диспетчера Redux и активной вкладки и ссылок на элементы
   const dispatch = useDispatch();
-  const ingredients = useSelector((state) => state.ingredientsData.ingredients, shallowEqual);
-  const isOrder = useSelector((state) => state.burgerData.isOrder, shallowEqual);
+  const { ingredients } = useSelector((state) => state.ingredientsData, shallowEqual);
+  const { isOrder } = useSelector((state) => state.burgerData, shallowEqual);
 
   // Импорт хука для работы с параметрами строки запроса
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,7 +33,7 @@ export default function HomePage() {
   // Эффект для установки активной вкладки из URL при монтировании компонента
   useEffect(() => {
     if (isOrder) {
-      setSearchParams({ bun: null, ingredients: null });
+      setSearchParams({});
       dispatch(setOrderState(false));
     }
     if (bunBurgerId) {
@@ -56,4 +56,6 @@ export default function HomePage() {
       </DndProvider>
     </div>
   );
-}
+};
+
+export default HomePage;

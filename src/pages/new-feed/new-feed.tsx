@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 import RenderContent from '../../components/render-content/render-content';
 
 // Подключение Redux
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 
 // Подключение стилей
 import { ERRORS } from '../../utils/constants';

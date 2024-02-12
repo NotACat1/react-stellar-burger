@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import React, { useState, useEffect, FC, FormEvent } from 'react';
+import { Link } from 'react-router-dom';
 
 // Подключение компонентов
 import { EmailInput, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 // Подключение Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { startLogin } from '../../services/actions/user';
 import { login } from '../../services/thunk/user';
 
@@ -13,7 +13,7 @@ import { login } from '../../services/thunk/user';
 import styles from './login.module.css';
 import useForm from '../../utils/useForm';
 
-export default function LoginPage() {
+const LoginPage: FC = () => {
   // Получение диспетчера Redux и активной вкладки и ссылок на элементы
   const dispatch = useDispatch();
   // Получение данных из Redux-стейта
@@ -31,7 +31,7 @@ export default function LoginPage() {
   }, [dispatch]);
 
   // Обработчик отправки формы
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     setisFormSubmitted(true);
     if (!values.email || !values.password) return;
@@ -44,27 +44,15 @@ export default function LoginPage() {
         <h1 className="text text_type_main-medium">Вход</h1>
         {/* Компонент для ввода email */}
         <EmailInput
-          type="email"
           onChange={handleChange}
-          value={values.email}
+          value={values.email!}
           placeholder="E-mail"
           name="email"
           isIcon={false}
-          // Показываем ошибку, если форма была отправлена и поле не заполнено
-          error={isFormSubmitted && !values.email}
-          errorText="Это поле должно быть заполнено."
           autoComplete="user-email"
         />
         {/* Компонент для ввода пароля */}
-        <PasswordInput
-          onChange={handleChange}
-          value={values.password}
-          name="password"
-          // Показываем ошибку, если форма была отправлена и поле не заполнено
-          error={isFormSubmitted && !values.password}
-          errorText="Это поле должно быть заполнено."
-          autoComplete="user-password"
-        />
+        <PasswordInput onChange={handleChange} value={values.password!} name="password" autoComplete="user-password" />
         {/* Показываем ошибку, если запрос не отправлен и есть ошибка входа */}
         {!isRequesting && hasRequesFailed && (
           <p className="text text_type_main-default text_color_error">
@@ -94,4 +82,6 @@ export default function LoginPage() {
       </div>
     </div>
   );
-}
+};
+
+export default LoginPage;

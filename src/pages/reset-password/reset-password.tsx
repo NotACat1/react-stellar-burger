@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC, FormEvent } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 
 // Подключение компонентов
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 // Подключение Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { startResetPasword } from '../../services/actions/user';
 import { resetPassword } from '../../services/thunk/user';
 
@@ -13,7 +13,7 @@ import { resetPassword } from '../../services/thunk/user';
 import styles from './reset-password.module.css';
 import useForm from '../../utils/useForm';
 
-export default function ResetPasswordPage() {
+const ResetPasswordPage: FC = () => {
   // Получение диспетчера Redux
   const dispatch = useDispatch();
   // Получение данных из Redux-стейта
@@ -33,7 +33,7 @@ export default function ResetPasswordPage() {
   }, [dispatch]);
 
   // Обработчик отправки формы
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     setisFormSubmitted(true);
     if (!values.password || !values.code) return;
@@ -53,11 +53,8 @@ export default function ResetPasswordPage() {
         {/* Поле для ввода нового пароля */}
         <PasswordInput
           onChange={handleChange}
-          value={values.password}
+          value={values.password!}
           name="password"
-          // Показываем ошибку, если форма была отправлена и поле не заполнено
-          error={isFormSubmitted && !values.password}
-          errorText="Это поле должно быть заполнено."
           autoComplete="user-password"
         />
         {/* Поле для ввода кода из письма */}
@@ -65,7 +62,7 @@ export default function ResetPasswordPage() {
           type={'text'}
           placeholder={'Введите код из письма'}
           onChange={handleChange}
-          value={values.code}
+          value={values.code!}
           name={'code'}
           // Проверка наличия значения и отображение ошибки при необходимости
           error={isFormSubmitted && !values.code}
@@ -94,4 +91,6 @@ export default function ResetPasswordPage() {
       </div>
     </div>
   );
-}
+};
+
+export default ResetPasswordPage;

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC, FormEvent } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 
 // Подключение компонентов
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 // Подключение Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { startForgotPassword } from '../../services/actions/user';
 import { forgotPassword } from '../../services/thunk/user';
 
@@ -13,7 +13,7 @@ import { forgotPassword } from '../../services/thunk/user';
 import styles from './forgot-password.module.css';
 import useForm from '../../utils/useForm';
 
-export default function ForgotPasswordPage() {
+const ForgotPasswordPage: FC = () => {
   // Получение диспетчера Redux
   const dispatch = useDispatch();
   // Получение данных из Redux-стейта
@@ -33,17 +33,12 @@ export default function ForgotPasswordPage() {
   }, [dispatch]);
 
   // Обработчик отправки формы
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     setisFormSubmitted(true);
     if (!values.email) return;
     dispatch(forgotPassword(values.email));
   };
-
-  //useEffect(() => {
-  //  dispatch(setForgotPasswordLoading());
-  //  dispatch(setForgotPasswordState(false));
-  //}, [dispatch, setForgotPasswordState, setForgotPasswordLoading]);
 
   if (isPasswordForgot) {
     return <Navigate to="/reset-password" replace />;
@@ -55,15 +50,11 @@ export default function ForgotPasswordPage() {
         <h1 className="text text_type_main-medium">Восстановление пароля</h1>
         {/* Компонент ввода e-mail */}
         <EmailInput
-          type="email"
           onChange={handleChange}
-          value={values.email}
+          value={values.email!}
           placeholder="E-mail"
           name="email"
           isIcon={false}
-          // Показываем ошибку, если форма была отправлена и поле не заполнено
-          error={isFormSubmitted && !values.email}
-          errorText="Это поле должно быть заполнено."
           autoComplete="user-email"
         />
         {/* Отображение ошибки запроса восстановления пароля */}
@@ -88,4 +79,6 @@ export default function ForgotPasswordPage() {
       </div>
     </div>
   );
-}
+};
+
+export default ForgotPasswordPage;

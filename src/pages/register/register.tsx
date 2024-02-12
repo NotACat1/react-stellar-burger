@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 
 // Подключение компонентов
 import { Input, EmailInput, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 // Подключение Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { startRegistration } from '../../services/actions/user';
 import { registration } from '../../services/thunk/user';
 
@@ -13,7 +13,7 @@ import { registration } from '../../services/thunk/user';
 import styles from './register.module.css';
 import useForm from '../../utils/useForm';
 
-export default function RegisterPage() {
+const RegisterPage: FC = () => {
   // Получение диспетчера Redux
   const dispatch = useDispatch();
   // Получение данных из Redux-стейта
@@ -31,7 +31,7 @@ export default function RegisterPage() {
   }, [dispatch]);
 
   // Обработчик отправки формы
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     setisFormSubmitted(true);
     if (!values.name || !values.email || !values.password) return;
@@ -48,7 +48,7 @@ export default function RegisterPage() {
           <Input
             type="text"
             onChange={handleChange}
-            value={values.name}
+            value={values.name!}
             placeholder="Имя"
             name="name"
             // Показываем ошибку, если форма была отправлена и поле не заполнено
@@ -59,26 +59,19 @@ export default function RegisterPage() {
 
           {/* Поле ввода электронной почты */}
           <EmailInput
-            type="email"
             onChange={handleChange}
-            value={values.email}
+            value={values.email!}
             placeholder="E-mail"
             name="email"
             isIcon={false}
-            // Показываем ошибку, если форма была отправлена и поле не заполнено
-            error={isFormSubmitted && !values.email}
-            errorText="Это поле должно быть заполнено."
             autoComplete="user-email"
           />
 
           {/* Поле ввода пароля */}
           <PasswordInput
             onChange={handleChange}
-            value={values.password}
+            value={values.password!}
             name="password"
-            // Показываем ошибку, если форма была отправлена и поле не заполнено
-            error={isFormSubmitted && !values.password}
-            errorText="Это поле должно быть заполнено."
             autoComplete="user-password"
           />
 
@@ -107,4 +100,6 @@ export default function RegisterPage() {
       </div>
     </>
   );
-}
+};
+
+export default RegisterPage;

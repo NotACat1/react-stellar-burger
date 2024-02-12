@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import React, { useMemo, useState, FC } from 'react';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 // Подключение Redux
 import { useDispatch } from 'react-redux';
@@ -8,7 +8,8 @@ import { logout } from '../../services/thunk/user';
 // Подключение стилей и данных
 import styles from './profile.module.css';
 
-export default function ProfilePage() {
+const ProfilePage: FC = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch(); // Хук для вызова действий Redux
 
   const [currentPage, setCurrentPage] = useState('home');
@@ -21,14 +22,14 @@ export default function ProfilePage() {
   // Мемоизация функции для определения стиля ссылки
   const getLinkStyle = useMemo(
     () =>
-      ({ isActive }) => {
+      ({ isActive }: { isActive: boolean }) => {
         const defaultStyle = `${styles.link} text text_type_main-medium`;
         return `${defaultStyle} ${isActive ? 'text_color_primary' : 'text_color_inactive'}`;
       },
     [],
   );
 
-  const changePage = (page) => {
+  const changePage = (page: string) => {
     setCurrentPage(page);
   };
 
@@ -48,7 +49,7 @@ export default function ProfilePage() {
             </NavLink>
           </li>
           <li>
-            <NavLink onClick={handleLogout} className={getLinkStyle} to="login" end>
+            <NavLink onClick={handleLogout} className={getLinkStyle} to="/login">
               Выход
             </NavLink>
           </li>
@@ -61,4 +62,6 @@ export default function ProfilePage() {
       <Outlet />
     </div>
   );
-}
+};
+
+export default ProfilePage;
