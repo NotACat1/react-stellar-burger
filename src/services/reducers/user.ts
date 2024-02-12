@@ -28,7 +28,35 @@ import {
   WS_SUCCESS,
 } from '../types/user';
 
-const initialState = {
+import { IOrder } from '../../utils/types/order';
+import { IUser } from '../../utils/types/user';
+
+import { TUserActions } from '../actions/user';
+
+type TUserState = {
+  isRequestingRegistration: boolean;
+  hasRequestRegistrationFailed: boolean;
+  isRequestingLogin: boolean;
+  hasRequestLoginFailed: boolean;
+  isRequestingForgotPassword: boolean;
+  hasRequestForgotPasswordFailed: boolean;
+  isRequestingResetPassword: boolean;
+  hasRequestResetPasswordFailed: boolean;
+  isRequestingGetUserData: boolean;
+  hasRequestGetUserDataFailed: boolean;
+  isRequestingLogout: boolean;
+  hasRequestLogoutFailed: boolean;
+  isRequestingSendUserData: boolean;
+  hasRequestSendUserDataFailed: boolean;
+  isPasswordForgot: boolean;
+  isLoading: boolean;
+  isConnection: boolean;
+  hasConnectionFailed: boolean;
+  orders: IOrder[];
+  information: IUser | null;
+};
+
+const initialState: TUserState = {
   isRequestingRegistration: false,
   hasRequestRegistrationFailed: false,
   isRequestingLogin: false,
@@ -48,12 +76,11 @@ const initialState = {
   isConnection: false,
   hasConnectionFailed: false,
   orders: [],
-  information: {},
-  errors: [],
+  information: null,
 };
 
-export const userReducer = (state = initialState, { type, payload }) => {
-  switch (type) {
+export const userReducer = (state = initialState, actions: TUserActions) => {
+  switch (actions.type) {
     case START_REGISTRATION: {
       return {
         ...state,
@@ -65,7 +92,7 @@ export const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isRequestingRegistration: false,
-        information: payload,
+        information: actions.payload,
       };
     }
     case REGISTRATION_FAILED: {
@@ -73,7 +100,6 @@ export const userReducer = (state = initialState, { type, payload }) => {
         ...state,
         isRequestingRegistration: false,
         hasRequestRegistrationFailed: true,
-        errors: [...state.errors, payload],
       };
     }
     case START_LOGIN: {
@@ -87,7 +113,7 @@ export const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isRequestingLogin: false,
-        information: payload,
+        information: actions.payload,
       };
     }
     case LOGIN_FAILED: {
@@ -95,7 +121,6 @@ export const userReducer = (state = initialState, { type, payload }) => {
         ...state,
         isRequestingLogin: false,
         hasRequestLoginFailed: true,
-        errors: [...state.errors, payload],
       };
     }
     case START_FORGOT_PASSWORD: {
@@ -116,7 +141,6 @@ export const userReducer = (state = initialState, { type, payload }) => {
         ...state,
         isRequestingForgotPassword: false,
         hasRequestForgotPasswordFailed: true,
-        errors: [...state.errors, payload],
       };
     }
     case START_RESET_PASSWORD: {
@@ -137,7 +161,6 @@ export const userReducer = (state = initialState, { type, payload }) => {
         ...state,
         isRequestingResetPassword: false,
         hasRequestResetPasswordFailed: true,
-        errors: [...state.errors, payload],
       };
     }
     case GET_USER_DATA: {
@@ -151,7 +174,7 @@ export const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isRequestingGetUserData: false,
-        information: payload,
+        information: actions.payload,
       };
     }
     case GET_USER_DATA_FAILED: {
@@ -159,7 +182,6 @@ export const userReducer = (state = initialState, { type, payload }) => {
         ...state,
         isRequestingGetUserData: false,
         hasRequestGetUserDataFailed: true,
-        errors: [...state.errors, payload],
       };
     }
     case START_LOGOUT: {
@@ -173,7 +195,7 @@ export const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isRequestingLogout: false,
-        information: {},
+        information: null,
         accessToken: null,
       };
     }
@@ -182,7 +204,6 @@ export const userReducer = (state = initialState, { type, payload }) => {
         ...state,
         isRequestingLogout: false,
         hasRequestLogoutFailed: true,
-        errors: [...state.errors, payload],
       };
     }
     case SEND_USER_DATA: {
@@ -196,7 +217,7 @@ export const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isRequestingSendUserData: false,
-        information: payload,
+        information: actions.payload,
       };
     }
     case SEND_USER_DATA_FAILED: {
@@ -204,13 +225,12 @@ export const userReducer = (state = initialState, { type, payload }) => {
         ...state,
         isRequestingSendUserData: false,
         hasRequestSendUserDataFailed: true,
-        errors: [...state.errors, payload],
       };
     }
     case SET_FORGOT_PASSWORD_STATE: {
       return {
         ...state,
-        isPasswordForgot: payload,
+        isPasswordForgot: actions.payload,
       };
     }
     case WS_START:
@@ -230,15 +250,13 @@ export const userReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         hasConnectionFailed: true,
-        errors: [...state.errors, payload],
       };
     case WS_GET_ORDERS: {
-      const { orders } = payload;
       return {
         ...state,
         isLoading: false,
         hasConnectionFailed: false,
-        orders: [...orders],
+        orders: [...actions.payload.orders],
       };
     }
     case WS_CLOSED:
