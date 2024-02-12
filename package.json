@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Stellar Burgers - это захватывающее космическое приложение, посвященное приготовлению и доставке космических бургеров во Вселенной. В настоящее время наша бургерная находится на краю света и имеет потенциал стать одним из самых прославленных заведений в космосе.",
   "homepage": "https://notacat1.github.io/react-stellar-burger",
-	"repository": {
+  "repository": {
     "type": "git",
     "url": "git+https://github.com/NotACat1/react-stellar-burger.git"
   },
@@ -20,7 +20,7 @@
   "license": "ISC",
   "private": true,
   "dependencies": {
-    "@reduxjs/toolkit": "^1.7.2",
+    "@reduxjs/toolkit": "^1.9.7",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
     "clsx": "^1.2.1",
     "commitlint": "^18.2.0",
@@ -38,6 +38,7 @@
     "react-scripts": "5.0.1",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
+    "redux-ignore": "^1.2.5",
     "redux-thunk": "^2.4.1",
     "stylelint": "^15.11.0",
     "stylelint-config-standard": "^34.0.0",
@@ -52,6 +53,7 @@
     "@testing-library/user-event": "^12.1.10",
     "@types/react": "17.0.0",
     "@types/react-dom": "17.0.0",
+    "@types/uuid": "^9.0.8",
     "eslint": "^8.52.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-eslint-plugin": "^5.1.1",
@@ -66,8 +68,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-		"predeploy": "npm run build",
-		"deploy": "gh-pages -d build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "eject": "react-scripts eject",
     "husky-inst": "npx husky install && chmod +x .husky/pre-commit .husky/commit-msg",
     "msg-commit": "npx commitlint -E HUSKY_GIT_PARAMS",
