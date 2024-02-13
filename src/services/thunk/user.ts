@@ -32,7 +32,7 @@ import {
   startLogin,
   startLogout,
   startRegistration,
-  startResetPasword,
+  startResetPassword,
 } from '../actions/user';
 
 import { AppThunk } from '../index';
@@ -128,7 +128,7 @@ export const forgotPassword = (email: string): AppThunk =>
 // Сброс пароля
 export const resetPassword = ({ code, password }: { code?: string; password?: string }): AppThunk =>
   async (dispatch) => {
-    dispatch(startResetPasword());
+    dispatch(startResetPassword());
     try {
       await apiService.resetPassword(code, password);
       dispatch(resetPaswordSuccess());
