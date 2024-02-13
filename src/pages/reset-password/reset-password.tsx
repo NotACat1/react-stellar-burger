@@ -6,7 +6,7 @@ import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burg
 
 // Подключение Redux
 import { useDispatch, useSelector } from '../../services/hooks';
-import { startResetPasword } from '../../services/actions/user';
+import { startResetPassword } from '../../services/actions/user';
 import { resetPassword } from '../../services/thunk/user';
 
 // Подключение стилей
@@ -29,7 +29,7 @@ const ResetPasswordPage: FC = () => {
   const [isFormSubmitted, setisFormSubmitted] = useState(false);
 
   useEffect(() => {
-    dispatch(startResetPasword());
+    dispatch(startResetPassword());
   }, [dispatch]);
 
   // Обработчик отправки формы

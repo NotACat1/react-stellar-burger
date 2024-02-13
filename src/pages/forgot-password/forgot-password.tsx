@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC, FormEvent } from 'react';
+import React, { useEffect, FC, FormEvent } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 
 // Подключение компонентов
@@ -25,8 +25,6 @@ const ForgotPasswordPage: FC = () => {
 
   // Использование хука для управления значениями формы
   const { values, handleChange } = useForm({ email: '' });
-  // Состояние для отслеживания отправки формы
-  const [isFormSubmitted, setisFormSubmitted] = useState(false);
 
   useEffect(() => {
     dispatch(startForgotPassword());
@@ -35,7 +33,6 @@ const ForgotPasswordPage: FC = () => {
   // Обработчик отправки формы
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    setisFormSubmitted(true);
     if (!values.email) return;
     dispatch(forgotPassword(values.email));
   };

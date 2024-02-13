@@ -214,7 +214,7 @@ export const registrationSuccess = (userData: IUser): IRegistrationSuccessAction
 export const registrationFailed = (): IRegistrationFailedAction => ({ type: REGISTRATION_FAILED });
 
 // Действия связанные с процессом сброса пароля
-export const startResetPasword = (): IStartResetPaswordAction => ({ type: START_RESET_PASSWORD });
+export const startResetPassword = (): IStartResetPaswordAction => ({ type: START_RESET_PASSWORD });
 export const resetPaswordSuccess = (): IResetPaswordSuccessAction => ({ type: RESET_PASSWORD_SUCCESS });
 export const resetPaswordFailed = (): IResetPaswordFailedAction => ({ type: RESET_PASSWORD_FAILED });
 
